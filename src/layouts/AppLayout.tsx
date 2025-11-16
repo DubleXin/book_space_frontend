@@ -10,7 +10,12 @@ export default function AppLayout() {
         <Link to="/explore" style={{ marginRight: 12 }}>
           Explore
         </Link>
-        <Link to="/serverless">Serverless Test</Link>
+        <Link to="/serverless" style={{ marginRight: 12 }}>
+          Serverless Test
+        </Link>
+        <Link to="/protected" style={{ marginRight: 12 }}>
+          Protected Test
+        </Link>
       </nav>
       <Outlet />
     </div>
