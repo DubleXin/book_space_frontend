@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import api from "../api/client";
 
 const PREFIX = import.meta.env.VITE_APP_PREFIX || "bookspace";
 const VERSION = "v1";
@@ -10,7 +11,7 @@ const LOCAL_STORAGE = {
 };
 
 type User = {
-  id: number;
+  sub: number;
   email: string;
 };
 
@@ -25,7 +26,7 @@ type AuthState = {
     user: User;
   }) => void;
 
-  logout: () => void;
+  logout: () => Promise<void>;
   setAccessToken: (token: string) => void;
 };
 
@@ -42,7 +43,17 @@ export const useAuth = create<AuthState>((set) => ({
     set({ accessToken, refreshToken, user });
   },
 
-  logout: () => {
+  logout: async () => {
+    const refreshToken = localStorage.getItem(LOCAL_STORAGE.refresh);
+
+    if (refreshToken) {
+      try {
+        await api.post("/auth/logout", { refreshToken });
+      } catch (err) {
+        console.error("Backend logout failed", err);
+      }
+    }
+
     localStorage.removeItem(LOCAL_STORAGE.access);
     localStorage.removeItem(LOCAL_STORAGE.refresh);
     localStorage.removeItem(LOCAL_STORAGE.user);

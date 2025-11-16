@@ -12,14 +12,13 @@ export default function ProtectedPage() {
       console.error(err);
     }
   };
-
   return (
     <div style={{ padding: 40 }}>
       <h1>Protected Content</h1>
       <p>Welcome, {user?.email}</p>
+      <p>Your user id is: {user?.sub}</p>
 
       <button onClick={testRequest}>Test API Request</button>
-
       <button onClick={logout} style={{ marginTop: 20 }}>
         Logout
       </button>
