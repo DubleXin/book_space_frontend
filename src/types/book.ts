@@ -9,7 +9,7 @@ export interface Book {
   externalSource?: string | null;
   externalId?: number | null;
 
-  createdAt?: string; // backend returns timestamps as ISO strings
+  createdAt?: string;
   updatedAt?: string;
 }
 

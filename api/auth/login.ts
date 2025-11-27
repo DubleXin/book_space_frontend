@@ -2,8 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const BACKEND_ADDRESS = process.env.BACKEND_ADDRESS!;
-const AUTH_PORT = process.env.AUTH_SERVICE_PORT!;
+const AUTH_ADDRESS = process.env.AUTH_SERVICE_ADDRESS!;
 
 type LoginResponse = {
   success: boolean;
@@ -19,9 +18,8 @@ type TokenPayload = {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST") {
+  if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
-  }
 
   const { email, password } = req.body;
 
@@ -31,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const response = await axios.post<LoginResponse>(
-      `${BACKEND_ADDRESS}:${AUTH_PORT}/api/auth/login`,
+      `${AUTH_ADDRESS}/api/auth/login`,
       { email, password }
     );
 

@@ -1,13 +1,11 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import axios from "axios";
 
-const BACKEND_ADDRESS = process.env.BACKEND_ADDRESS!;
-const BOOK_PORT = process.env.BOOK_SERVICE_PORT!;
+const BOOK_ADDRESS = process.env.BOOK_SERVICE_ADDRESS!;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "GET") {
+  if (req.method !== "GET")
     return res.status(405).json({ error: "Method not allowed" });
-  }
 
   const { id } = req.query;
 
@@ -18,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     queryString.delete("id");
 
     const requestQueryString = queryString.toString();
-    const url = `${BACKEND_ADDRESS}:${BOOK_PORT}/api/subject/${id}${
+    const url = `${BOOK_ADDRESS}/api/subject/${id}${
       requestQueryString ? `?${requestQueryString}` : ""
     }`;
 
