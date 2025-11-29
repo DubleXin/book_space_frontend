@@ -9,6 +9,11 @@ export interface Profile {
   updatedAt?: string;
 }
 
+export interface ProfileResponse {
+  success: boolean;
+  data: Profile;
+}
+
 export interface Review {
   id: number;
   userId: number;
@@ -21,6 +26,16 @@ export interface Review {
   book?: Book;
 }
 
+export interface ReviewListResponse {
+  success: boolean;
+  data: Review[];
+}
+
+export interface ReviewResponse {
+  success: boolean;
+  data: Review;
+}
+
 export interface StarredBook {
   id: number;
   userId: number;
@@ -29,4 +44,14 @@ export interface StarredBook {
   updatedAt?: string;
 
   book?: Book;
+}
+
+export interface StarredListResponse {
+  success: boolean;
+  data: StarredBook[];
+}
+
+export interface StarredResponse {
+  success: boolean;
+  data?: StarredBook;
 }

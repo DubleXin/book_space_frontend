@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/client";
+import { login as apiLogin } from "../api/auth";
 import { useAuth } from "../store";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
@@ -21,8 +21,8 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await api.post("/auth/login", { email, password });
-      login(res.data);
+      const data = await apiLogin(email, password);
+      login(data);
       navigate("/protected");
     } catch (err) {
       const message =

@@ -13,6 +13,11 @@ export interface Book {
   updatedAt?: string;
 }
 
+export interface BookResponse {
+  success: boolean;
+  data: Book;
+}
+
 export interface Subject {
   id: number;
   name: string;

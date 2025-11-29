@@ -1,16 +1,30 @@
-import api from "./client";
-import { type Profile, type Review, type StarredBook } from "../types/profile";
+import {
+  type Profile,
+  type ProfileResponse,
+  type ReviewResponse,
+  type ReviewListResponse,
+  type StarredResponse,
+  type StarredListResponse,
+} from "../types/profile";
+import { callService } from "./client";
+import { SERVICES } from "./services";
 
 export async function getMyProfile() {
-  const res = await api.get<{ success: boolean; data: Profile }>("/profile/me");
+  const res = await callService<ProfileResponse>({
+    method: "GET",
+    url: "/api/profile/me",
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }
 
 export async function updateMyProfile(payload: Partial<Profile>) {
-  const res = await api.put<{ success: boolean; data: Profile }>(
-    "/profile/me",
-    payload
-  );
+  const res = await callService<ProfileResponse>({
+    method: "PUT",
+    url: "/api/profile/me",
+    baseURL: SERVICES.profile,
+    data: payload,
+  });
   return res.data.data;
 }
 
@@ -19,50 +33,66 @@ export async function createReview(payload: {
   message: string;
   rating?: number;
 }) {
-  const res = await api.post<{ success: boolean; data: Review }>(
-    "/review",
-    payload
-  );
+  const res = await callService<ReviewResponse>({
+    method: "POST",
+    url: "/api/review",
+    baseURL: SERVICES.profile,
+    data: payload,
+  });
   return res.data.data;
 }
 
 export async function getMyReviews() {
-  const res = await api.get<{ success: boolean; data: Review[] }>("/review/me");
+  const res = await callService<ReviewListResponse>({
+    method: "GET",
+    url: "/api/review/me",
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }
 
 export async function getReviewsByBook(bookId: number) {
-  const res = await api.get<{ success: boolean; data: Review[] }>(
-    `/review/book/${bookId}`
-  );
+  const res = await callService<ReviewListResponse>({
+    method: "GET",
+    url: `/api/review/book/${bookId}`,
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }
 
 export async function getReviewsByUser(userId: number) {
-  const res = await api.get<{ success: boolean; data: Review[] }>(
-    `/review/${userId}`
-  );
+  const res = await callService<ReviewListResponse>({
+    method: "GET",
+    url: `/api/review/${userId}`,
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }
 
 export async function toggleStar(bookId: number) {
-  const res = await api.post<{ success: boolean; data?: StarredBook }>(
-    "/star",
-    { bookId }
-  );
+  const res = await callService<StarredResponse>({
+    method: "POST",
+    url: "/api/star",
+    baseURL: SERVICES.profile,
+    data: { bookId },
+  });
   return res.data;
 }
 
 export async function getMyStarred() {
-  const res = await api.get<{ success: boolean; data: StarredBook[] }>(
-    "/star/me"
-  );
+  const res = await callService<StarredListResponse>({
+    method: "GET",
+    url: "/api/star/me",
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }
 
 export async function getStarredByUser(userId: number) {
-  const res = await api.get<{ success: boolean; data: StarredBook[] }>(
-    `/star/${userId}`
-  );
+  const res = await callService<StarredListResponse>({
+    method: "GET",
+    url: `/api/star/${userId}`,
+    baseURL: SERVICES.profile,
+  });
   return res.data.data;
 }

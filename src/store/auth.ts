@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import api from "../api/client";
+import { jwtDecode } from "jwt-decode";
+import type { LoginResponse, TokenPayload } from "../types/auth";
+import { logout as apiLogout } from "../api/auth";
 
 const PREFIX = import.meta.env.VITE_APP_PREFIX || "bookspace";
 const VERSION = "v1";
@@ -10,24 +12,16 @@ const LOCAL_STORAGE = {
   user: `${PREFIX}.${VERSION}.user`,
 };
 
-type User = {
-  sub: number;
-  email: string;
-};
-
 type AuthState = {
   accessToken: string | null;
   refreshToken: string | null;
-  user: User | null;
+  user: TokenPayload | null;
 
-  login: (data: {
-    accessToken: string;
-    refreshToken: string;
-    user: User;
-  }) => void;
+  login: (data: LoginResponse) => void;
 
   logout: () => Promise<void>;
   setAccessToken: (token: string) => void;
+  setRefreshToken: (token: string) => void;
 };
 
 export const useAuth = create<AuthState>((set) => ({
@@ -35,12 +29,20 @@ export const useAuth = create<AuthState>((set) => ({
   refreshToken: localStorage.getItem(LOCAL_STORAGE.refresh),
   user: JSON.parse(localStorage.getItem(LOCAL_STORAGE.user) || "null"),
 
-  login: ({ accessToken, refreshToken, user }) => {
+  login: (data) => {
+    const accessToken = data.token;
+    const refreshToken = data.refreshToken;
+    const user = jwtDecode<TokenPayload>(accessToken);
+
     localStorage.setItem(LOCAL_STORAGE.access, accessToken);
     localStorage.setItem(LOCAL_STORAGE.refresh, refreshToken);
     localStorage.setItem(LOCAL_STORAGE.user, JSON.stringify(user));
 
-    set({ accessToken, refreshToken, user });
+    set({
+      accessToken,
+      refreshToken,
+      user,
+    });
   },
 
   logout: async () => {
@@ -48,7 +50,7 @@ export const useAuth = create<AuthState>((set) => ({
 
     if (refreshToken) {
       try {
-        await api.post("/auth/logout", { refreshToken });
+        await apiLogout(refreshToken);
       } catch (err) {
         console.error("Backend logout failed", err);
       }
@@ -63,6 +65,14 @@ export const useAuth = create<AuthState>((set) => ({
 
   setAccessToken: (token) => {
     localStorage.setItem(LOCAL_STORAGE.access, token);
-    set({ accessToken: token });
+
+    const user = jwtDecode<TokenPayload>(token);
+    localStorage.setItem(LOCAL_STORAGE.user, JSON.stringify(user));
+    set({ accessToken: token, user });
+  },
+
+  setRefreshToken: (token) => {
+    localStorage.setItem(LOCAL_STORAGE.refresh, token);
+    set({ refreshToken: token });
   },
 }));
