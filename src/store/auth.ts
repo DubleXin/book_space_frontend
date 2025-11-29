@@ -32,17 +32,18 @@ export const useAuth = create<AuthState>((set) => ({
   login: (data) => {
     const accessToken = data.token;
     const refreshToken = data.refreshToken;
-    const user = jwtDecode<TokenPayload>(accessToken);
+    try {
+      const user = jwtDecode<TokenPayload>(accessToken);
 
-    localStorage.setItem(LOCAL_STORAGE.access, accessToken);
-    localStorage.setItem(LOCAL_STORAGE.refresh, refreshToken);
-    localStorage.setItem(LOCAL_STORAGE.user, JSON.stringify(user));
+      localStorage.setItem(LOCAL_STORAGE.access, accessToken);
+      localStorage.setItem(LOCAL_STORAGE.refresh, refreshToken);
+      localStorage.setItem(LOCAL_STORAGE.user, JSON.stringify(user));
 
-    set({
-      accessToken,
-      refreshToken,
-      user,
-    });
+      set({ accessToken, refreshToken, user });
+    } catch {
+      console.error("Invalid login response", data);
+      return;
+    }
   },
 
   logout: async () => {
