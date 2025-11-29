@@ -1,42 +1,43 @@
 import { useState } from "react";
-import { login as apiLogin } from "../api/auth";
-import { useAuth } from "../store";
+import api from "../api/client";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
-type ApiErrorResponse = {
+type ApiError = {
   error: string;
 };
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const navigate = useNavigate();
-  const login = useAuth((s) => s.login);
 
-  const [email, setEmail] = useState("test@example.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
-      const data = await apiLogin(email, password);
-      login(data);
-      navigate("/protected");
-    } catch (err) {
-      const message =
-        (err as AxiosError<ApiErrorResponse>).response?.data?.error ||
-        (err as Error).message ||
-        "Login failed";
+      await api.post("/auth/register", { email, password });
 
-      setError(message);
+      setSuccess("Registration successful! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 1500);
+    } catch (err: unknown) {
+      const msg =
+        (err as AxiosError<ApiError>).response?.data?.error ||
+        (err as Error).message ||
+        "Registration failed";
+
+      setError(msg);
     }
   };
 
   return (
     <div style={{ padding: 40 }}>
-      <h1>Login</h1>
+      <h1>Register</h1>
 
       <form
         onSubmit={handleSubmit}
@@ -44,6 +45,7 @@ export default function LoginPage() {
       >
         <input
           placeholder="email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{ marginBottom: 10 }}
@@ -57,10 +59,11 @@ export default function LoginPage() {
           style={{ marginBottom: 10 }}
         />
 
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p style={{ color: "green" }}>{success}</p>}
     </div>
   );
 }

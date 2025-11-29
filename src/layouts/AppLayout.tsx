@@ -16,6 +16,9 @@ export default function AppLayout() {
         <Link to="/protected" style={{ marginRight: 12 }}>
           Protected Test
         </Link>
+        <Link to="/recommendation" style={{ marginRight: 12 }}>
+          Recommendation Test
+        </Link>
       </nav>
       <Outlet />
     </div>

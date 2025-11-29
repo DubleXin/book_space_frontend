@@ -1,9 +1,14 @@
-import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { useAuth } from "../store";
 
-const api = axios.create({
-  baseURL: "/api",
-});
+const AUTH_URL = import.meta.env.VITE_AUTH_SERVICE_ADDRESS! as string;
+const api = axios.create();
+api.defaults.withCredentials = true;
 
 interface RetryAxiosConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -64,8 +69,8 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await axios.post("/api/auth/refresh", {
-          refreshToken: auth.refreshToken,
+        const res = await axios.post(`${AUTH_URL}/api/auth/refresh`, {
+          token: auth.refreshToken,
         });
 
         const newAccessToken = res.data.accessToken;
@@ -92,5 +97,11 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export function callService<T = unknown>(
+  config: AxiosRequestConfig
+): Promise<AxiosResponse<T>> {
+  return api.request<T>(config);
+}
 
 export default api;
