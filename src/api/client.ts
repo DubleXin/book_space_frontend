@@ -73,7 +73,13 @@ api.interceptors.response.use(
           token: auth.refreshToken,
         });
 
-        const newAccessToken = res.data.accessToken;
+        const newAccessToken = res.data.token;
+
+        if (!newAccessToken || typeof newAccessToken !== "string") {
+          console.error("Invalid refresh response:", res.data);
+          await useAuth.getState().logout();
+          return Promise.reject("Invalid refresh token");
+        }
 
         useAuth.getState().setAccessToken(newAccessToken);
 
