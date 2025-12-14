@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import AppLayout from "../layouts/AppLayout";
+import NavbarLayout from "../layouts/NavbarLayout";
 import { HomePage, ServerlessTestPage, ExplorePage } from "../pages";
 import ProtectedPage from "../pages/Protected";
 import ProtectedRoute from "./ProtectedRoute";
@@ -10,7 +10,7 @@ import RecommendationTestPage from "../pages/RecommendationTestPage";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <NavbarLayout />,
     children: [
       {
         index: true,

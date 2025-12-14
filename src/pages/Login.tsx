@@ -32,13 +32,13 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 space-y-2">
       <h1 className="text-xl font-semibold text-stone-950 dark:text-white">
-        Login
+        Log in
         <span className="text-stone-400 dark:text-stone-300">/</span>
         <Link
           className="text-blue-500 dark:text-blue-300 hover:underline"
           to="/register"
         >
-          Register
+          Sign up
         </Link>
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -70,7 +70,7 @@ export default function LoginPage() {
           size="sm"
           disabled={isLoading}
         >
-          {isLoading ? "Loading..." : "Login"}
+          {isLoading ? "Loading..." : "Next"}
         </Button>
       </form>
       {isError && (
