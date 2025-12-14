@@ -1,69 +1,151 @@
 import { useState } from "react";
-import api from "../api/client";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
-
-type ApiError = {
-  error: string;
-};
+import { register as apiRegister } from "../api/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { Input } from "../components/ui/Input";
+import { Button } from "../components/ui/Button";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<{
+    password: string;
+    confirmPassword: string;
+  }>({
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState<{
+    isError: boolean;
+    errorType: "default" | "password";
+  }>({
+    isError: false,
+    errorType: "default",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
+    if (password.password !== password.confirmPassword) {
+      setError({
+        isError: true,
+        errorType: "password",
+      });
+      return;
+    }
+    setIsLoading(true);
+    setError({
+      isError: false,
+      errorType: "default",
+    });
 
     try {
-      await api.post("/auth/register", { email, password });
-
-      setSuccess("Registration successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 1500);
-    } catch (err: unknown) {
-      const msg =
-        (err as AxiosError<ApiError>).response?.data?.error ||
-        (err as Error).message ||
-        "Registration failed";
-
-      setError(msg);
+      await apiRegister(email, password.password);
+      navigate("/login");
+    } catch {
+      setError({
+        isError: true,
+        errorType: "default",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Register</h1>
-
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", width: 250 }}
-      >
-        <input
-          placeholder="email"
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 space-y-2">
+      <h1 className="text-xl font-semibold text-stone-950 dark:text-white">
+        <Link
+          className="text-blue-500 dark:text-blue-300 hover:underline"
+          to="/login"
+        >
+          Login
+        </Link>
+        <span className="text-stone-400 dark:text-stone-300">/</span>
+        Register
+      </h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <Input
+          variant={
+            error.isError && error.errorType === "default" ? "error" : "default"
+          }
+          required
           type="email"
+          placeholder="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ marginBottom: 10 }}
+          onChange={(e) => {
+            setError({
+              ...error,
+              isError: false,
+            });
+            setEmail(e.target.value);
+          }}
         />
-
-        <input
-          placeholder="password"
+        <Input
+          variant={
+            error.isError && error.errorType === "password"
+              ? "error"
+              : "default"
+          }
+          required
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ marginBottom: 10 }}
+          placeholder="password"
+          value={password.password}
+          onChange={(e) => {
+            setError({
+              ...error,
+              isError: false,
+            });
+            setPassword({
+              ...password,
+              password: e.target.value,
+            });
+          }}
         />
-
-        <button type="submit">Register</button>
+        <Input
+          variant={
+            error.isError && error.errorType === "password"
+              ? "error"
+              : "default"
+          }
+          required
+          type="password"
+          placeholder="confirm your password"
+          value={password.confirmPassword}
+          onChange={(e) => {
+            setError({
+              ...error,
+              isError: false,
+            });
+            setPassword({
+              ...password,
+              confirmPassword: e.target.value,
+            });
+          }}
+        />
+        <Button
+          variant={isLoading ? "ghost" : "primary"}
+          type="submit"
+          size="sm"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Register"}
+        </Button>
       </form>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error.isError && (
+        <p className="text-red-500 dark:text-red-300 text-sm">
+          {(() => {
+            switch (error.errorType) {
+              case "default":
+                return "Failed to register, please try again";
+              case "password":
+                return "Make sure that your passwords are the same";
+              default:
+                return "Failed to register";
+            }
+          })()}
+        </p>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
+import { ThemeToggle } from "../components/ui/ThemeToggle";
 
 export default function AppLayout() {
   return (
@@ -19,6 +20,7 @@ export default function AppLayout() {
         <Link to="/recommendation" style={{ marginRight: 12 }}>
           Recommendation Test
         </Link>
+        <ThemeToggle />
       </nav>
       <Outlet />
     </div>
