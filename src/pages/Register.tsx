@@ -59,10 +59,10 @@ export default function RegisterPage() {
           className="text-blue-500 dark:text-blue-300 hover:underline"
           to="/login"
         >
-          Login
+          Log in
         </Link>
         <span className="text-stone-400 dark:text-stone-300">/</span>
-        Register
+        Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
@@ -129,7 +129,7 @@ export default function RegisterPage() {
           size="sm"
           disabled={isLoading}
         >
-          {isLoading ? "Loading..." : "Register"}
+          {isLoading ? "Loading..." : "Next"}
         </Button>
       </form>
       {error.isError && (
