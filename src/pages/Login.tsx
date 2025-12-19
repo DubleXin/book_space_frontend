@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       const data = await apiLogin(email, password);
       login(data);
-      navigate("/protected");
+      navigate("/me");
     } catch (err) {
       if (err) setIsError(true);
     } finally {

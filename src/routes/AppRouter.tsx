@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
         element: <RecommendationTestPage />,
       },
       {
-        path: "protected",
+        path: "me",
         element: (
           <ProtectedRoute>
             <ProtectedPage />
