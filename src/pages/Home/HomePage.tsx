@@ -64,7 +64,7 @@ const HomePage = () => {
   const recommendationsResult = recommendationQuery.data;
 
   const recommendations =
-    recommendationsResult?.status === "ok"
+    recommendationsResult && recommendationsResult.status === "ok"
       ? recommendationsResult.data
       : EMPTY_RECS;
 
