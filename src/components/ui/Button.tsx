@@ -2,9 +2,12 @@ import { cn } from "../../utils/cn";
 
 const buttonVariants = {
   primary: `
-    bg-blue-600 text-white
-    hover:bg-blue-700
-    focus:ring-blue-500
+    bg-sky-600 text-white
+    hover:bg-sky-700
+    focus:ring-sky-500
+    dark:bg-sky-700
+    dark:hover:bg-sky-600
+    dark:focus:ring-sky-500
   `,
 
   secondary: `

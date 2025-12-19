@@ -62,7 +62,7 @@ const NavbarLayout = () => {
             dark:text-white
             dark:hover:bg-slate-800"
             >
-              <Link className="flex gap-2" to="/protected">
+              <Link className="flex gap-2" to="/me">
                 <CircleUser />
                 <p>{user.email}</p>
               </Link>

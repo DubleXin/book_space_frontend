@@ -3,17 +3,17 @@ import { cn } from "../../utils/cn";
 
 const tagVariants = {
   primary: `
-    bg-blue-600 text-white
-    hover:bg-blue-700
-    focus:ring-blue-500
+    bg-sky-600 text-white
+    hover:bg-sky-700
+    focus:ring-sky-500
   `,
 
   secondary: `
     bg-gray-200 text-gray-900
     hover:bg-gray-300
-    dark:bg-neutral-700 dark:text-white
-    dark:hover:bg-neutral-600
-    focus:ring-gray-400
+    dark:bg-slate-700 dark:text-white
+    dark:hover:bg-slate-600
+    focus:ring-slate-400
   `,
 
   outline: `
