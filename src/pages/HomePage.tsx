@@ -141,10 +141,7 @@ const HomePage = () => {
           </div>
         </main>
 
-        <aside
-          className="flex-[1] p-4
-      border rounded-xl "
-        >
+        <aside className="flex-[1]">
           <Activity />
         </aside>
       </div>
