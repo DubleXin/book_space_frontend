@@ -84,8 +84,8 @@ const Activity = () => {
   });
 
   const profile = profileQuery.data ?? undefined;
-  const stars = starQuery.data ?? undefined;
-  const reviews = reviewQuery.data ?? undefined;
+  const stars = starQuery.data ?? [];
+  const reviews = reviewQuery.data ?? [];
 
   if (!user) return <></>;
   return (
