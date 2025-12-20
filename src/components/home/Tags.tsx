@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Subject } from "../../types/book";
-import { Tag } from "../../components/ui/Tag";
+import { Tag } from "../ui/Tag";
 
 const parseTags = (tag: string): string => tag.replace("_", " ");
 

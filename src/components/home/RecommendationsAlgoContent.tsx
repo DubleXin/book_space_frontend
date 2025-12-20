@@ -6,6 +6,8 @@ type Props = {
 };
 
 const RecommendationsAlgoContent = ({ recommendations }: Props) => {
+  console.log(recommendations.recommendedBooks);
+
   return (
     <div className="min-h-0 rounded-xl border p-4 pb-12">
       <div className="flex items-center justify-between gap-3">
@@ -14,23 +16,24 @@ const RecommendationsAlgoContent = ({ recommendations }: Props) => {
 
       {/* key: min-h-0 + overflow */}
       <div className="mt-3 min-h-0 overflow-auto">
-        <ul className="space-y-3 flex gap-3 flex-wrap">
+        <ul className="flex gap-3 flex-wrap">
           {recommendations.recommendedBooks
             .filter(
               (value, i, array) =>
                 array.findIndex((s) => s.bookId === value.bookId) === i
             )
             .map((s) => (
-              <BookCard
-                bookId={s.bookId}
-                key={`book-${s.bookId}`}
-                variant="tile"
-                coverSize="lg"
-                title={true}
-                to="/"
-                author={true}
-                coverUrl={true}
-              />
+              <li key={`book-${s.bookId}`}>
+                <BookCard
+                  bookId={s.bookId}
+                  variant="tile"
+                  coverSize="lg"
+                  title={true}
+                  to="/"
+                  author={true}
+                  coverUrl={true}
+                />
+              </li>
             ))}
         </ul>
       </div>

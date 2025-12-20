@@ -1,16 +1,17 @@
-import { fetchAllBooks, fetchAllSubjects } from "../../api/book";
+import { fetchAllBooks, fetchAllSubjects } from "../api/book";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchEnhancedRecommendations } from "../../api/recommendation";
-import { useAuth } from "../../store";
-import type { EnhancedRecommendationResponse } from "../../types/recommendation";
-import GuestContent from "./GuestContent";
-import Tags from "./Tags";
-import RecommendationsAiContent from "./RecommendationsAiContent";
-import RecommendationsAlgoContent from "./RecommendationsAlgoContent";
-import { Button } from "../../components/ui/Button";
+import { fetchEnhancedRecommendations } from "../api/recommendation";
+import { useAuth } from "../store";
+import type { EnhancedRecommendationResponse } from "../types/recommendation";
+import GuestContent from "../components/home/GuestContent";
+import Tags from "../components/home/Tags";
+import RecommendationsAiContent from "../components/home/RecommendationsAiContent";
+import RecommendationsAlgoContent from "../components/home/RecommendationsAlgoContent";
+import { Button } from "../components/ui/Button";
 import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { Activity } from "../components/home/Activity";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ const HomePage = () => {
           className="flex-[1] p-4
       border rounded-xl "
         >
-          <h3>Recent Actions</h3>
+          <Activity />
         </aside>
       </div>
     );
@@ -162,11 +163,8 @@ const HomePage = () => {
           <RecommendationsAlgoContent recommendations={recommendations.data} />
         </div>
       </main>
-      <aside
-        className="flex-[1] p-4
-      border rounded-xl "
-      >
-        <h3>Recent Actions</h3>
+      <aside className="flex-[1] ">
+        <Activity />
       </aside>
     </div>
   );

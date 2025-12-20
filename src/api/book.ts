@@ -30,7 +30,6 @@ export async function fetchBook(id: number | string, signal?: AbortSignal) {
     baseURL: SERVICES.book,
     signal,
   });
-  console.log(res.data);
 
   return res.data;
 }

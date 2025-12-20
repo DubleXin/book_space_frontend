@@ -26,6 +26,7 @@ const SearchBar = () => {
       <Search className="h-4 w-4  " />
 
       <input
+        id="top-searchbar"
         className="
           w-full bg-transparent
           outline-none
