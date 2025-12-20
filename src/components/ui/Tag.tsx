@@ -1,21 +1,19 @@
+import React from "react";
 import { cn } from "../../utils/cn";
 
-const buttonVariants = {
+const tagVariants = {
   primary: `
     bg-sky-600 text-white
     hover:bg-sky-700
     focus:ring-sky-500
-    dark:bg-sky-700
-    dark:hover:bg-sky-600
-    dark:focus:ring-sky-500
   `,
 
   secondary: `
     bg-gray-200 text-gray-900
     hover:bg-gray-300
-    dark:bg-neutral-700 dark:text-white
-    dark:hover:bg-neutral-600
-    focus:ring-gray-400
+    dark:bg-slate-700 dark:text-white
+    dark:hover:bg-slate-600
+    focus:ring-slate-400
   `,
 
   outline: `
@@ -29,6 +27,7 @@ const buttonVariants = {
   ghost: `
     text-gray-700 hover:bg-gray-100
     dark:text-gray-300 dark:hover:bg-neutral-800
+    focus:ring-gray-400
   `,
 
   danger: `
@@ -38,36 +37,40 @@ const buttonVariants = {
   `,
 };
 
-const buttonSizes = {
-  sm: "text-sm px-3 py-1.5",
-  md: "text-base px-4 py-2",
-  lg: "text-lg px-5 py-3",
+const tagSizes = {
+  sm: "text-xs px-2.5 py-1",
+  md: "text-sm px-3 py-1.5",
+  lg: "text-base px-3.5 py-2",
 };
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: keyof typeof buttonVariants;
-  size?: keyof typeof buttonSizes;
+type TagProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: keyof typeof tagVariants;
+  size?: keyof typeof tagSizes;
+  selected?: boolean;
 };
 
-export function Button({
-  variant = "primary",
+export function Tag({
+  variant = "secondary",
   size = "md",
+  selected = false,
   className,
+  type = "button",
   ...props
-}: ButtonProps) {
+}: TagProps) {
   return (
     <button
+      type={type}
       className={cn(
         `
         inline-flex items-center justify-center
-        rounded-md font-medium
-        transition focus:outline-none focus:ring-2
+        rounded-full font-medium
+        transition focus:outline-none focus:ring-2 focus:ring-offset-2
         disabled:opacity-50 disabled:cursor-not-allowed
-        w-full
+        whitespace-nowrap
         `,
-
-        buttonVariants[variant],
-        buttonSizes[size],
+        tagVariants[variant],
+        tagSizes[size],
+        selected && "ring-2 ring-offset-2",
         className
       )}
       {...props}

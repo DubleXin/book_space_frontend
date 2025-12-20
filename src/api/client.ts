@@ -15,19 +15,19 @@ interface RetryAxiosConfig extends InternalAxiosRequestConfig {
 }
 
 interface FailedRequest {
-  resolve: (token: string | null) => void;
+  resolve: (token: string) => void;
   reject: (error: unknown) => void;
 }
 
 let isRefreshing = false;
 let failedQueue: FailedRequest[] = [];
 
-const processQueue = (error: unknown, token: string | null) => {
+const processQueue = (error: unknown, token?: string) => {
   failedQueue.forEach((p) => {
     if (error) {
       p.reject(error);
     } else {
-      p.resolve(token);
+      p.resolve(token!);
     }
   });
 
@@ -38,6 +38,7 @@ api.interceptors.request.use((config) => {
   const token = useAuth.getState().accessToken;
 
   if (token) {
+    config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${token}`;
   }
 
@@ -51,15 +52,22 @@ api.interceptors.response.use(
     const auth = useAuth.getState();
     const originalRequest = error.config as RetryAxiosConfig;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const isRefreshCall =
+      typeof originalRequest?.url === "string" &&
+      originalRequest.url.includes("/api/auth/refresh");
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !isRefreshCall
+    ) {
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
+        return new Promise<string>((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
-            if (originalRequest.headers && token) {
-              originalRequest.headers.Authorization = `Bearer ${token}`;
-            }
+            originalRequest.headers = originalRequest.headers ?? {};
+            originalRequest.headers.Authorization = `Bearer ${token}`;
             return api(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -69,7 +77,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await axios.post(`${AUTH_URL}/api/auth/refresh`, {
+        const res = await api.post(`${AUTH_URL}/api/auth/refresh`, {
           token: auth.refreshToken,
         });
 
@@ -78,6 +86,8 @@ api.interceptors.response.use(
         if (!newAccessToken || typeof newAccessToken !== "string") {
           console.error("Invalid refresh response:", res.data);
           await useAuth.getState().logout();
+          processQueue("Invalid refresh token");
+          isRefreshing = false;
           return Promise.reject("Invalid refresh token");
         }
 
@@ -86,13 +96,12 @@ api.interceptors.response.use(
         processQueue(null, newAccessToken);
         isRefreshing = false;
 
-        if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        }
+        originalRequest.headers = originalRequest.headers ?? {};
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return api(originalRequest);
       } catch (err) {
-        processQueue(err, null);
+        processQueue(err);
         isRefreshing = false;
 
         useAuth.getState().logout();

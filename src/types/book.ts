@@ -1,13 +1,15 @@
 export interface Book {
   id: number;
   title: string;
-  author?: string | null;
-  isbn?: string | null;
-  publishedYear?: number | null;
-  coverUrl?: string | null;
-  description?: string | null;
-  externalSource?: string | null;
-  externalId?: number | null;
+  author?: string | undefined;
+  isbn?: string | undefined;
+  publishedYear?: number | undefined;
+  coverUrl?: string | undefined;
+  description?: string | undefined;
+  externalSource?: string | undefined;
+  externalId?: number | undefined;
+
+  subjects?: Subject[];
 
   createdAt?: string;
   updatedAt?: string;

@@ -1,11 +1,10 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import NavbarLayout from "../layouts/NavbarLayout";
 import { HomePage, ServerlessTestPage, ExplorePage } from "../pages";
-import ProtectedPage from "../pages/Protected";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
-import RecommendationTestPage from "../pages/RecommendationTestPage";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -25,14 +24,10 @@ export const router = createBrowserRouter([
         element: <ServerlessTestPage />,
       },
       {
-        path: "recommendation",
-        element: <RecommendationTestPage />,
-      },
-      {
-        path: "protected",
+        path: "me",
         element: (
           <ProtectedRoute>
-            <ProtectedPage />
+            <Profile />
           </ProtectedRoute>
         ),
       },
