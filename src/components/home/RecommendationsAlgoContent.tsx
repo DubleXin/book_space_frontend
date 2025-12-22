@@ -6,8 +6,6 @@ type Props = {
 };
 
 const RecommendationsAlgoContent = ({ recommendations }: Props) => {
-  console.log(recommendations.recommendedBooks);
-
   return (
     <div className="min-h-0 rounded-xl border p-4 pb-12">
       <div className="flex items-center justify-between gap-3">
@@ -29,7 +27,7 @@ const RecommendationsAlgoContent = ({ recommendations }: Props) => {
                   variant="tile"
                   coverSize="lg"
                   title={true}
-                  to="/"
+                  to={`/book/${s.bookId}`}
                   author={true}
                   coverUrl={true}
                 />

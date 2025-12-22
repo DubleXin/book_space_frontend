@@ -19,6 +19,16 @@ export async function getMyProfile(signal?: AbortSignal) {
   return res.data.data;
 }
 
+export async function getProfileByUserId(userId: number, signal?: AbortSignal) {
+  const res = await callService<ProfileResponse>({
+    method: "GET",
+    url: `/api/profile/${userId}`,
+    baseURL: SERVICES.profile,
+    signal,
+  });
+  return res.data.data;
+}
+
 export async function updateMyProfile(
   payload: Partial<Profile>,
   signal?: AbortSignal
@@ -51,6 +61,18 @@ export async function createReview(
   return res.data.data;
 }
 
+export const createReviewRQ = (payload: {
+  bookId: number;
+  message: string;
+  rating?: number;
+}) =>
+  callService<ReviewResponse>({
+    method: "POST",
+    url: "/api/review",
+    baseURL: SERVICES.profile,
+    data: payload,
+  });
+
 export async function getMyReviews(signal?: AbortSignal) {
   const res = await callService<ReviewListResponse>({
     method: "GET",
@@ -78,7 +100,7 @@ export async function getReviewsByUser(userId: number, signal?: AbortSignal) {
     baseURL: SERVICES.profile,
     signal,
   });
-  return res.data.data;
+  return res.data.data ?? [];
 }
 
 export async function toggleStar(bookId: number, signal?: AbortSignal) {
@@ -92,6 +114,15 @@ export async function toggleStar(bookId: number, signal?: AbortSignal) {
   return res.data;
 }
 
+export function toggleStarRQ(bookId: number) {
+  return callService<StarredResponse>({
+    method: "POST",
+    url: "/api/star",
+    baseURL: SERVICES.profile,
+    data: { bookId },
+  });
+}
+
 export async function getMyStarred(signal?: AbortSignal) {
   const res = await callService<StarredListResponse>({
     method: "GET",
@@ -99,7 +130,7 @@ export async function getMyStarred(signal?: AbortSignal) {
     baseURL: SERVICES.profile,
     signal,
   });
-  return res.data.data;
+  return res.data.data ?? [];
 }
 
 export async function getStarredByUser(userId: number, signal?: AbortSignal) {
@@ -109,5 +140,5 @@ export async function getStarredByUser(userId: number, signal?: AbortSignal) {
     baseURL: SERVICES.profile,
     signal,
   });
-  return res.data.data;
+  return res.data.data ?? [];
 }
