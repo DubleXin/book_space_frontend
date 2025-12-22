@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import Profile from "../pages/Profile";
+import Book from "../pages/BookPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "serverless",
         element: <ServerlessTestPage />,
+      },
+      {
+        path: "book/:id",
+        element: <Book />,
       },
       {
         path: "me",

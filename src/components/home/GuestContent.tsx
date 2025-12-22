@@ -40,7 +40,7 @@ const GuestContent = ({
                 variant="tile"
                 coverSize="lg"
                 title={true}
-                to="/"
+                to={`/book/${s.id}`}
                 author={true}
                 coverUrl={true}
               />
