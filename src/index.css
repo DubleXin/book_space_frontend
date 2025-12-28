@@ -22,3 +22,39 @@ html.dark {
 *::after {
   box-sizing: border-box;
 }
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.65);
+}
+
+/* dark mode */
+.dark .scrollbar-thin {
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+.dark .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.32);
+}

@@ -1,8 +1,9 @@
 import type { Book } from "../../types/book";
 import { IconButton } from "../ui/IconButton";
-import { useMyStars, useToggleStar } from "./book.hooks";
+import { useToggleStar } from "./book.hooks";
 import { useAuth } from "../../store";
 import { Star, PenLine } from "lucide-react";
+import { useMyStars } from "../../hooks";
 
 const CoverContent = ({
   book,

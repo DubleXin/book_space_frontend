@@ -42,7 +42,7 @@ const GuestContent = ({
                 title={true}
                 to={`/book/${s.id}`}
                 author={true}
-                coverUrl={true}
+                cover={true}
               />
             ))}
         </ul>

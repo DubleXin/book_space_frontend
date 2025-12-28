@@ -4,7 +4,7 @@ import { HomePage, ServerlessTestPage, ExplorePage } from "../pages";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
-import Profile from "../pages/Profile";
+import ProfilePage from "../pages/ProfilePage";
 import Book from "../pages/BookPage";
 
 export const router = createBrowserRouter([
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         path: "me",
         element: (
           <ProtectedRoute>
-            <Profile />
+            <ProfilePage />
           </ProtectedRoute>
         ),
       },

@@ -36,6 +36,11 @@ export interface ReviewResponse {
   data: Review;
 }
 
+export interface ReviewEmptyResponse {
+  success: boolean;
+  message: string;
+}
+
 export interface StarredBook {
   id: number;
   userId: number;

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useMyProfile } from "../../../../hooks";
+import { useMyProfile } from "../../../hooks";
 import { Star } from "lucide-react";
-import { Button } from "../../../ui/Button";
-import { ratingStyles } from "../reviews.utils";
-import { cn } from "../../../../utils/cn";
-import { useCreateReview } from "../reviews.hooks";
+import { Button } from "../../ui/Button";
+import { ratingStyles } from "./reviews.utils";
+import { cn } from "../../../utils/cn";
+import { useCreateReview } from "./reviews.hooks";
 
 const ReviewCompose = ({ bookId }: { bookId: number }) => {
   const profileQuery = useMyProfile();
@@ -32,7 +32,6 @@ const ReviewCompose = ({ bookId }: { bookId: number }) => {
             className="w-full resize-none rounded-xl border bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500"
           />
 
-          {/* Rating row */}
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <span className="text-xs text-neutral-600 dark:text-neutral-300">
@@ -80,7 +79,6 @@ const ReviewCompose = ({ bookId }: { bookId: number }) => {
               </div>
             </div>
 
-            {/* Actions */}
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -100,8 +98,6 @@ const ReviewCompose = ({ bookId }: { bookId: number }) => {
                 className="w-auto"
                 disabled={!canSubmit}
                 onClick={() => {
-                  console.log("sending bookId: ", bookId);
-
                   reviewsQuery.mutate({
                     bookId: bookId,
                     message: message,
