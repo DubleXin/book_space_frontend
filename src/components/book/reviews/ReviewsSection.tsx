@@ -2,7 +2,7 @@
 import { ReviewCard } from "./ReviewCard";
 import { ratingStyles } from "./reviews.utils";
 
-import ReviewCompose from "./ReviewCompose/ReviewCompose";
+import ReviewCompose from "./ReviewCompose";
 import { useReviewsByBook } from "./reviews.hooks";
 import { useAuth } from "../../../store";
 

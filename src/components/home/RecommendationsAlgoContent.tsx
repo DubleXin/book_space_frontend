@@ -29,7 +29,7 @@ const RecommendationsAlgoContent = ({ recommendations }: Props) => {
                   title={true}
                   to={`/book/${s.bookId}`}
                   author={true}
-                  coverUrl={true}
+                  cover={true}
                 />
               </li>
             ))}

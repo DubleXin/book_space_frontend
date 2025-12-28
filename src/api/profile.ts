@@ -5,6 +5,7 @@ import {
   type ReviewListResponse,
   type StarredResponse,
   type StarredListResponse,
+  type ReviewEmptyResponse,
 } from "../types/profile";
 import { callService } from "./client";
 import { SERVICES } from "./services";
@@ -42,6 +43,14 @@ export async function updateMyProfile(
   });
   return res.data.data;
 }
+
+export const updateMyProfileRQ = (payload: Partial<Profile>) =>
+  callService<ProfileResponse>({
+    method: "PUT",
+    url: "/api/profile/me",
+    baseURL: SERVICES.profile,
+    data: payload,
+  });
 
 export async function createReview(
   payload: {
@@ -83,7 +92,7 @@ export async function getMyReviews(signal?: AbortSignal) {
   return res.data.data;
 }
 
-export async function getReviewsByBook(bookId: number, signal?: AbortSignal) {
+export async function getReviewsByBookId(bookId: number, signal?: AbortSignal) {
   const res = await callService<ReviewListResponse>({
     method: "GET",
     url: `/api/review/book/${bookId}`,
@@ -93,7 +102,7 @@ export async function getReviewsByBook(bookId: number, signal?: AbortSignal) {
   return res.data.data;
 }
 
-export async function getReviewsByUser(userId: number, signal?: AbortSignal) {
+export async function getReviewsByUserId(userId: number, signal?: AbortSignal) {
   const res = await callService<ReviewListResponse>({
     method: "GET",
     url: `/api/review/${userId}`,
@@ -102,6 +111,13 @@ export async function getReviewsByUser(userId: number, signal?: AbortSignal) {
   });
   return res.data.data ?? [];
 }
+
+export const deleteReviewByIdRQ = (id: number) =>
+  callService<ReviewEmptyResponse>({
+    method: "DELETE",
+    url: `/api/review/${id}`,
+    baseURL: SERVICES.profile,
+  });
 
 export async function toggleStar(bookId: number, signal?: AbortSignal) {
   const res = await callService<StarredResponse>({

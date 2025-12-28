@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { fetchBook } from "../../api/book";
-import { getMyStarred, toggleStarRQ } from "../../api/profile";
+import { toggleStarRQ } from "../../api/profile";
 import { useAuth } from "../../store";
 import type { StarredBook } from "../../types/profile";
 
@@ -18,17 +18,6 @@ export const useBook = (bookId: number | null) =>
     enabled: Number.isFinite(bookId),
   });
 
-export const useMyStars = () => {
-  const user = useAuth((s) => s.user);
-
-  return useQuery({
-    queryKey: ["stars", user?.sub],
-    queryFn: ({ signal }) => getMyStarred(signal),
-    placeholderData: keepPreviousData,
-    enabled: !!user,
-  });
-};
-
 export const useToggleStar = () => {
   const user = useAuth((s) => s.user);
   const qc = useQueryClient();
@@ -37,12 +26,13 @@ export const useToggleStar = () => {
     mutationFn: toggleStarRQ,
     onMutate: async (bookId: number) => {
       if (!user) return;
-      await qc.cancelQueries({ queryKey: ["stars", user.sub] });
+      const key = ["stars", user.sub] as const;
 
-      const prev = qc.getQueryData<StarredBook[]>(["stars", user.sub]) ?? [];
+      await qc.cancelQueries({ queryKey: key });
+
+      const prev = qc.getQueryData<StarredBook[]>(key) ?? [];
 
       const isStared = prev.some((s) => s.bookId === bookId);
-
       const next = isStared
         ? prev.filter((s) => s.bookId !== bookId)
         : [
@@ -55,16 +45,19 @@ export const useToggleStar = () => {
               updatedAt: new Date().toISOString(),
             } as StarredBook,
           ];
-      qc.setQueryData(["stars", user.sub], next);
-      return { prev };
+      qc.setQueryData<StarredBook[]>(key, next);
+
+      return { prev, key };
     },
+
     onError: (_err, _bookId, ctx) => {
-      if (!user) return;
-      qc.setQueryData(["stars", user.sub], ctx?.prev);
+      if (!ctx) return;
+      qc.setQueryData(ctx.key, ctx.prev);
     },
-    onSettled: () => {
-      if (!user) return;
-      qc.invalidateQueries({ queryKey: ["stars", user.sub] });
+
+    onSettled: (_data, _err, _bookId, ctx) => {
+      if (!ctx) return;
+      qc.invalidateQueries({ queryKey: ctx.key });
     },
   });
 };

@@ -7,7 +7,7 @@ import {
 import {
   createReviewRQ,
   getProfileByUserId,
-  getReviewsByBook,
+  getReviewsByBookId,
 } from "../../../api/profile";
 import { useAuth } from "../../../store";
 import type { Review } from "../../../types/profile";
@@ -23,7 +23,7 @@ export const useProfileByUserId = (userId?: number | null) =>
 
 export const useReviewsByBook = (bookId: number | null) =>
   useQuery({
-    queryFn: ({ signal }) => getReviewsByBook(bookId!, signal),
+    queryFn: ({ signal }) => getReviewsByBookId(bookId!, signal),
     queryKey: ["reviews-book", bookId],
     placeholderData: keepPreviousData,
     enabled: Number.isFinite(bookId),
@@ -35,19 +35,19 @@ export const useCreateReview = () => {
 
   return useMutation({
     mutationFn: createReviewRQ,
+
     onMutate: async (vars: {
       bookId: number;
       message: string;
       rating?: number;
     }) => {
-      if (!user)
-        return {
-          prev: qc.getQueryData<Review[]>(["reviews-book", vars.bookId]),
-        };
       const key = ["reviews-book", vars.bookId] as const;
 
       await qc.cancelQueries({ queryKey: key });
-      const prev = qc.getQueryData(key);
+
+      const prev = qc.getQueryData<Review[]>(key);
+
+      if (!user) return { prev, key };
 
       const tempReview: Review = {
         id: -Date.now(),
@@ -64,15 +64,17 @@ export const useCreateReview = () => {
         return [tempReview, ...items];
       });
 
-      return { prev };
+      return { prev, key };
     },
-    onError: (_err, vars, ctx) => {
-      const key = ["reviews-book", vars.bookId] as const;
-      qc.setQueryData(key, ctx?.prev);
+
+    onError: (_err, _vars, ctx) => {
+      if (!ctx) return;
+      qc.setQueryData(ctx.key, ctx.prev);
     },
-    onSettled: (_data, _err, vars) => {
-      const key = ["reviews-book", vars.bookId] as const;
-      qc.invalidateQueries({ queryKey: key });
+
+    onSettled: (_data, _err, _vars, ctx) => {
+      if (!ctx) return;
+      qc.invalidateQueries({ queryKey: ctx.key });
     },
   });
 };

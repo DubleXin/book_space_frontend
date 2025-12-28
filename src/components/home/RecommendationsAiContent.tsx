@@ -18,7 +18,7 @@ const RecommendationsAiContent = ({ recommendations }: Props) => {
               coverSize="lg"
               title={true}
               subject={true}
-              coverUrl={true}
+              cover={true}
               to={`/book/${s.bookId}`}
             />
           </li>

@@ -24,7 +24,7 @@ type BookCardProps = {
   title: boolean;
   author?: boolean;
   subject?: boolean;
-  coverUrl?: boolean | null;
+  cover?: boolean | null;
 
   to: string;
 
@@ -43,7 +43,7 @@ export function BookCard({
   title,
   author,
   subject,
-  coverUrl,
+  cover: coverUrl,
   to,
   variant = "tile",
   coverSize = "md",

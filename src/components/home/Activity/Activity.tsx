@@ -1,15 +1,17 @@
 import { useAuth } from "../../../store";
 import { getActivityList, sortBadges } from "./activity.utils";
 import { Link } from "react-router-dom";
-import { useReviewsEnriched, useStarEnriched } from "./activity.hooks";
+
 import { useMyProfile } from "../../../hooks";
+import { useStars } from "../../../hooks/useStars";
+import { useReviews } from "../../../hooks/useReviews";
 
 const Activity = () => {
   const user = useAuth((s) => s.user);
 
   const profileQuery = useMyProfile();
-  const starQuery = useStarEnriched();
-  const reviewQuery = useReviewsEnriched();
+  const starQuery = useStars();
+  const reviewQuery = useReviews();
 
   const profile = profileQuery.data ?? undefined;
   const stars = starQuery.data ?? [];
