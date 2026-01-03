@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import NavbarLayout from "../layouts/NavbarLayout";
 import {
   HomePage,
-  ServerlessTestPage,
   ExplorePage,
   ProfilePage,
   LoginPage,
@@ -23,10 +22,6 @@ export const router = createBrowserRouter([
       {
         path: "explore",
         element: <ExplorePage />,
-      },
-      {
-        path: "serverless",
-        element: <ServerlessTestPage />,
       },
       {
         path: "book/:id",
