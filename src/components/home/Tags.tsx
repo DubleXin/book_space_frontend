@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Subject } from "../../types/book";
 import { Tag } from "../ui/Tag";
 
@@ -14,9 +14,9 @@ const Tags = ({ tags }: Props) => {
     <div className="rounded-xl border p-4">
       <div className="flex items-center justify-start gap-3 flex-wrap">
         {tags.map((s) => (
-          <Tag variant="outline" key={`subject-tag-${s.name}`}>
-            {parseTags(s.name)}
-          </Tag>
+          <Link key={`subject-tag-${s.name}`} to={`/explore?subject=${s.name}`}>
+            <Tag variant="outline">{parseTags(s.name)}</Tag>
+          </Link>
         ))}
         <Tag onClick={() => navigate("/explore")}>more</Tag>
       </div>

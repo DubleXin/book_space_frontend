@@ -10,69 +10,66 @@ const NavbarLayout = () => {
   const navigate = useNavigate();
   const user = useAuth((s) => s.user);
   const profileQuery = useMyProfile();
-
   const profile = profileQuery.data ?? { username: "Loading..." };
+
   return (
     <div>
-      <nav className="flex items-center gap-12 px-8 py-2 min-h-8">
-        <div className="flex-1">
-          <Link to="/">
-            <BookOpenText className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-          </Link>
-        </div>
-
-        <div
-          className="
-        flex-[3] 
-        flex gap-2 items-center justify-center
-        h-full w-full min-w-60"
-        >
-          <SearchBar />
-          <ThemeToggle />
-        </div>
-
-        <div
-          className="
-          flex-[2] 
-          flex justify-center items-center gap-3"
-        >
-          {!user ? (
-            <>
-              <Button
-                onClick={() => navigate("/register")}
-                className="max-w-[30%]"
-                variant="outline"
-                size="sm"
-              >
-                Sign up
-              </Button>
-              <Button
-                onClick={() => navigate("/login")}
-                variant="secondary"
-                className="max-w-[30%]"
-                size="sm"
-              >
-                Log In
-              </Button>
-            </>
-          ) : (
-            <div
-              className="
-            text-stone-950
-            p-2 rounded-full
-            hover:bg-neutral-200
-
-            dark:text-white
-            dark:hover:bg-slate-800"
+      <nav className="sticky top-0 z-40 border-b border-black/5 dark:border-white/10 bg-white/70 dark:bg-slate-950/60 backdrop-blur">
+        <div className="max-w-8xl px-4 sm:px-6">
+          <div className="flex h-14 items-center gap-3">
+            {/* Left */}
+            <Link
+              to="/"
+              className="shrink-0 rounded-lg p-2 hover:bg-black/5 dark:hover:bg-white/10"
             >
-              <Link className="flex gap-2" to="/me">
-                <CircleUser />
-                <p>{profile.username}</p>
-              </Link>
+              <BookOpenText className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+            </Link>
+
+            {/* Center */}
+            <div className="flex flex-1 items-center justify-center gap-2 ">
+              <div className="w-full max-w-xl">
+                <SearchBar />
+              </div>
+              <div className="shrink-0">
+                <ThemeToggle />
+              </div>
             </div>
-          )}
+
+            {/* Right */}
+            <div className="shrink-0 flex items-center gap-2 md:min-w-[220px]">
+              {!user ? (
+                <>
+                  <Button
+                    onClick={() => navigate("/register")}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    onClick={() => navigate("/login")}
+                    variant="secondary"
+                    size="sm"
+                  >
+                    Log In
+                  </Button>
+                </>
+              ) : (
+                <Link
+                  to="/me"
+                  className="flex items-center justify-center gap-2 rounded-full px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10"
+                >
+                  <CircleUser className="text-slate-700 dark:text-slate-200" />
+                  <p className="text-sm text-slate-800 dark:text-slate-100 max-w-[140px] truncate md:block hidden">
+                    {profile.username}
+                  </p>
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </nav>
+
       <Outlet />
     </div>
   );

@@ -1,15 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchAllBooks, fetchAllSubjects } from "../../api/book";
+import { fetchAllBooks } from "../../api/book";
 import { fetchEnhancedRecommendations } from "../../api/recommendation";
 import { useAuth } from "../../store";
-
-export const useSubjects = () =>
-  useQuery({
-    queryKey: ["subjects"],
-    queryFn: ({ signal }) => fetchAllSubjects(undefined, signal),
-    staleTime: 10 * 60 * 1000,
-    placeholderData: keepPreviousData,
-  });
 
 export const useRecommendations = () => {
   const user = useAuth((s) => s.user);
@@ -23,7 +15,7 @@ export const useRecommendations = () => {
   });
 };
 
-export const useBooks = (
+export const useAllBooks = (
   options = { limit: "20" },
   cacheKeyIndex: string = "1"
 ) => {

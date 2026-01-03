@@ -1,11 +1,15 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import NavbarLayout from "../layouts/NavbarLayout";
-import { HomePage, ServerlessTestPage, ExplorePage } from "../pages";
+import {
+  HomePage,
+  ServerlessTestPage,
+  ExplorePage,
+  ProfilePage,
+  LoginPage,
+  RegisterPage,
+  BookPage,
+} from "../pages";
 import ProtectedRoute from "./ProtectedRoute";
-import LoginPage from "../pages/Login";
-import RegisterPage from "../pages/Register";
-import ProfilePage from "../pages/ProfilePage";
-import Book from "../pages/BookPage";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "book/:id",
-        element: <Book />,
+        element: <BookPage />,
       },
       {
         path: "me",
