@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import type { Book } from "../../types/book";
 import { Tag } from "../ui/Tag";
+import { Link } from "react-router-dom";
 
 const BookContent = ({ book }: { book: Book }) => {
   return (
@@ -31,9 +32,11 @@ const BookContent = ({ book }: { book: Book }) => {
         <div className="mt-3 flex flex-wrap gap-2">
           {book?.subjects?.length ? (
             book.subjects.map((s) => (
-              <Tag key={s.name} variant="primary">
-                {s.name}
-              </Tag>
+              <Link key={`tag-${s.name}`} to={`/explore?subject=${s.name}`}>
+                <Tag key={s.name} variant="primary">
+                  {s.name.replace("_", " ")}
+                </Tag>
+              </Link>
             ))
           ) : (
             <span className="text-sm text-neutral-500 dark:text-neutral-400">

@@ -34,7 +34,7 @@ const Book = () => {
   const onGotoReviewButtonCLick = () => navigate("#reviews");
 
   // TODO: make not found page and use redirect
-  if (!bookId) return null;
+  if (!bookId) return <></>;
   const book = bookQuery.data?.data;
 
   if (!book) return <></>;

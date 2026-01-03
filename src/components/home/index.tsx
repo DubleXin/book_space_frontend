@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { Activity } from "./Activity";
-import { useBooks, useRecommendations, useSubjects } from "./home.hooks";
+import { useAllBooks, useRecommendations } from "./home.hooks";
+import { useSubjects } from "../../hooks/useSubjects";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const HomePage = () => {
 
   const recommendationQuery = useRecommendations();
 
-  const bookQuery = useBooks(
+  const bookQuery = useAllBooks(
     {
       limit: "20",
     },

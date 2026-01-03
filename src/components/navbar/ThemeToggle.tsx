@@ -10,7 +10,7 @@ export const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       className="
-        relative mx-2 w-full max-w-16 h-8
+        relative mx-2 w-full min-w-12 h-8
         rounded-full
         bg-neutral-200 hover:bg-neutral-100
         dark:bg-slate-700 dark:hover:bg-slate-600
