@@ -5,6 +5,7 @@ import { ReviewsSection } from "./reviews/ReviewsSection";
 import CoverContent from "./CoverContent";
 import { useNavigate } from "react-router-dom";
 import BookContent from "./BookContent";
+import UnknownBook from "./UnknownBook";
 
 const Book = () => {
   const { id } = useParams();
@@ -33,13 +34,10 @@ const Book = () => {
   }, [hash, navigate]);
   const onGotoReviewButtonCLick = () => navigate("#reviews");
 
-  // TODO: make not found page and use redirect
-  if (!bookId) return <></>;
   const book = bookQuery.data?.data;
-
-  if (!book) return <></>;
-
   const reviewsHighlighted = hash === "#reviews";
+
+  if (!bookId || !book) return <UnknownBook />;
 
   return (
     <div className="max-w-screen p-8 text-slate-950 dark:text-white">
