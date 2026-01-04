@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { register as apiRegister } from "../api/auth";
+import { register as apiRegister } from "../../api/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { Input } from "../components/ui/Input";
-import { Button } from "../components/ui/Button";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -66,6 +66,8 @@ export default function RegisterPage() {
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
+          id="user-email"
+          autoComplete="email"
           variant={
             error.isError && error.errorType === "default" ? "error" : "default"
           }
@@ -82,6 +84,8 @@ export default function RegisterPage() {
           }}
         />
         <Input
+          id="user-new-password"
+          autoComplete="new-password"
           variant={
             error.isError && error.errorType === "password"
               ? "error"
@@ -103,6 +107,8 @@ export default function RegisterPage() {
           }}
         />
         <Input
+          id="user-confirm-password"
+          autoComplete="new-password"
           variant={
             error.isError && error.errorType === "password"
               ? "error"

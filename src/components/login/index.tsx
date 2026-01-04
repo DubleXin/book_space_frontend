@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { login as apiLogin } from "../api/auth";
-import { useAuth } from "../store";
+import { login as apiLogin } from "../../api/auth";
+
 import { Link, useNavigate } from "react-router-dom";
-import { Input } from "../components/ui/Input";
-import { Button } from "../components/ui/Button";
+import { useAuth } from "../../store";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ export default function LoginPage() {
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
+          id="user-email"
+          autoComplete="email"
           variant={isError ? "error" : "default"}
           required
           type="email"
@@ -54,6 +57,8 @@ export default function LoginPage() {
           }}
         />
         <Input
+          id="user-password"
+          autoComplete="current-password"
           variant={isError ? "error" : "default"}
           required
           type="password"
