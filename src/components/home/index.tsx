@@ -1,35 +1,33 @@
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { useAuth } from "../../store";
 import type { EnhancedRecommendationResponse } from "../../types/recommendation";
+
 import GuestContent from "./GuestContent";
 import Tags from "./Tags";
 import RecommendationsAiContent from "./RecommendationsAiContent";
 import RecommendationsAlgoContent from "./RecommendationsAlgoContent";
-import { Button } from "../ui/Button";
-import { useEffect, useState } from "react";
 
-import { useLocation, useNavigate } from "react-router-dom";
-import { Activity } from "./Activity";
 import { useAllBooks, useRecommendations } from "./home.hooks";
 import { useSubjects } from "../../hooks/useSubjects";
 
+import { useMyProfile } from "../../hooks";
+import { useStars } from "../../hooks/useStars";
+import { useReviews } from "../../hooks/useReviews";
+import { getActivityList, sortBadges } from "./Activity/activity.utils";
+
+import { cn } from "../../utils/cn";
+import type { HomePanelState } from "./home.types";
+import ActivityPanel from "./ActivityPanel";
+import Shell from "./Shell";
+import HomeContext from "./home.context";
+
 const HomePage = () => {
-  const navigate = useNavigate();
+  const { hash } = useLocation();
 
   const user = useAuth((s) => s.user);
-  const [guestContentVariant, setGuestContentVariant] = useState<
-    "default" | "highlight"
-  >("default");
-
-  const EMPTY_RECS: EnhancedRecommendationResponse = {
-    success: false,
-    cachedAlgorithmic: false,
-    data: {
-      recommendedBooks: [],
-      aiHighlights: [],
-    },
-  };
-
-  const { hash } = useLocation();
+  const [panel, setPanel] = useState<HomePanelState>("default");
 
   useEffect(() => {
     if (!hash) return;
@@ -38,120 +36,99 @@ const HomePage = () => {
   }, [hash]);
 
   const subjectsQuery = useSubjects();
-
   const recommendationQuery = useRecommendations();
-
-  const bookQuery = useAllBooks(
-    {
-      limit: "20",
-    },
-    "1"
-  );
+  const bookQuery = useAllBooks({ limit: "20" }, "1");
 
   const subjects = subjectsQuery.data?.data ?? [];
+  const books = bookQuery.data?.data ?? [];
+
+  const EMPTY_RECS: EnhancedRecommendationResponse = {
+    success: false,
+    cachedAlgorithmic: false,
+    data: { recommendedBooks: [], aiHighlights: [] },
+  };
 
   const recommendationsResult = recommendationQuery.data;
-
   const recommendations =
     recommendationsResult && recommendationsResult.status === "ok"
       ? recommendationsResult.data
       : EMPTY_RECS;
 
-  const books = bookQuery.data?.data ?? [];
+  const profileQuery = useMyProfile();
+  const starQuery = useStars();
+  const reviewQuery = useReviews();
 
-  if (!user)
-    return (
-      <div
-        className="
-       w-screen 
-      flex 
-      p-8 gap-4 text-slate-950 dark:text-white"
-      >
-        <main className="flex-[2] p-4">
-          <div className="grid h-full grid-rows-[auto_1fr] gap-6">
-            <Tags tags={subjects} />
-            <GuestContent books={books} />
-          </div>
-        </main>
-      </div>
-    );
+  const profile = profileQuery.data ?? undefined;
+  const stars = useMemo(() => starQuery.data ?? [], [starQuery.data]);
+  const reviews = useMemo(() => reviewQuery.data ?? [], [reviewQuery.data]);
+
+  const activityItems = useMemo(() => {
+    return getActivityList(profile, stars, reviews).sort(sortBadges).reverse();
+  }, [profile, stars, reviews]);
+
+  const activityPending =
+    profileQuery.isPending || starQuery.isPending || reviewQuery.isPending;
 
   if (!recommendations.success) {
-    function onFeaturedButtonClick(): void {
-      setGuestContentVariant("highlight");
-      navigate("#featured");
-      setTimeout(() => {
-        setGuestContentVariant("default");
-        navigate("/");
-      }, 500);
-    }
-
-    return (
-      <div
-        className="w-screen flex 
-                p-8 gap-4 text-slate-950 dark:text-white"
-      >
-        <main
-          className="
-      flex-[2]
-      p-4
-      "
-        >
-          <div className="grid h-full grid-rows-[auto_1fr] gap-6">
-            <Tags tags={subjects} />
-            <div className="min-h-0 rounded-xl border p-4 pb-12">
-              <div className="flex items-center justify-between gap-3">
-                <h2 className="text-lg font-semibold">
-                  Tell us more about your tastes
-                </h2>
-              </div>
-              <div className="mt-3 min-h-0 overflow-auto">
-                <ul className=" flex flex-wrap gap-3 items-center">
-                  <li className="p-2">
-                    <Button onClick={() => navigate("/explore")}>
-                      Explore Catalog
-                    </Button>
-                  </li>
-                  <li className="p-1">
-                    <Button onClick={onFeaturedButtonClick} variant="secondary">
-                      Look for Featured Works
-                    </Button>
-                  </li>
-                </ul>
-              </div>
+    if (!user) {
+      return (
+        <div className="w-screen flex p-8 gap-4 text-slate-950 dark:text-white">
+          <main className="flex-[2] p-4">
+            <div className="grid h-full grid-rows-[auto_1fr] gap-6">
+              <Tags tags={subjects} />
+              <GuestContent books={books} />
             </div>
-
-            <GuestContent
-              id="featured"
-              variant={guestContentVariant}
-              books={books}
-            />
-          </div>
-        </main>
-
-        <aside className="flex-[1]">
-          <Activity />
-        </aside>
-      </div>
-    );
+          </main>
+        </div>
+      );
+    }
+    return <></>;
   }
 
   return (
-    <div
-      className="w-screen flex 
-                p-8 gap-4 text-slate-950 dark:text-white"
+    <HomeContext.Provider
+      value={{
+        state: panel,
+        onStateChange: setPanel,
+      }}
     >
-      <main className=" flex-[2] p-4">
-        <div className="grid h-full grid-rows-[auto_auto_1fr] gap-6">
-          <Tags tags={subjects} />
-          <RecommendationsAiContent recommendations={recommendations.data} />
-          <RecommendationsAlgoContent recommendations={recommendations.data} />
+      <Shell>
+        <div className="flex w-full gap-6 min-w-0 relative">
+          <main className="min-w-0">
+            <div className="grid h-full grid-rows-[auto_auto_1fr] gap-6">
+              <Tags tags={subjects} />
+              <RecommendationsAiContent
+                recommendations={recommendations.data}
+              />
+              <RecommendationsAlgoContent
+                recommendations={recommendations.data}
+              />
+            </div>
+          </main>
+
+          <aside
+            className={cn(
+              "absolute left-0 top-0 z-50 overflow-hidden",
+              "min-w-0",
+              "transition-[max-width,opacity] duration-300 ease-in-out",
+              panel === "activity"
+                ? "max-w-[560px] opacity-100 pointer-events-auto w-full"
+                : "max-w-0 opacity-0 pointer-events-none w-full"
+            )}
+          >
+            <ActivityPanel
+              username={profile?.username}
+              items={activityItems}
+              isPending={activityPending}
+              variant={panel === "activity" ? "expanded" : "compact"}
+              onExpand={() => setPanel("activity")}
+              onCollapse={() => setPanel("default")}
+            />
+          </aside>
         </div>
-      </main>
-      <aside className="flex-[1] ">
-        <Activity />
-      </aside>
-    </div>
+      </Shell>
+    </HomeContext.Provider>
   );
 };
+
 export default HomePage;

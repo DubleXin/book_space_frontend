@@ -9,9 +9,9 @@ const RecommendationsAiContent = ({ recommendations }: Props) => {
   return (
     <div className="rounded-xl border p-4">
       <h2 className="text-lg font-semibold">Selected works</h2>
-      <ul className="mt-3 flex gap-3">
+      <ul className="mt-3 flex flex-wrap gap-3 items-center sm:items-start justify-center sm:justify-start">
         {recommendations.aiHighlights.map((s) => (
-          <li key={`book-ai-${s.bookId}`}>
+          <li key={`book-ai-${s.bookId}`} className="">
             <BookCard
               bookId={s.bookId}
               variant="row"
