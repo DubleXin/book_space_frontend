@@ -19,9 +19,10 @@ import { getActivityList, sortBadges } from "./Activity/activity.utils";
 
 import { cn } from "../../utils/cn";
 import type { HomePanelState } from "./home.types";
-import ActivityPanel from "./ActivityPanel";
+
 import Shell from "./Shell";
 import HomeContext from "./home.context";
+import { Activity } from "./Activity";
 
 const HomePage = () => {
   const { hash } = useLocation();
@@ -116,7 +117,7 @@ const HomePage = () => {
                 : "max-w-0 opacity-0 pointer-events-none w-full"
             )}
           >
-            <ActivityPanel
+            <Activity
               username={profile?.username}
               items={activityItems}
               isPending={activityPending}
