@@ -8,7 +8,7 @@ import { cn } from "../../../../utils/cn";
 import ConfirmDialog from "../../../ui/ConfirmDialog";
 import RatingPill from "./RatingPill";
 import { clampText } from "../../../../utils/text";
-import { useDeleteReview } from "../../profile.hooks"; // <-- adjust path
+import { useDeleteReview } from "../../profile.hooks";
 
 const Reviews = () => {
   const reviewQuery = useReviews();
@@ -39,7 +39,6 @@ const Reviews = () => {
   return (
     <>
       <section className="rounded-2xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-neutral-950/40">
-        {/* Header */}
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="min-w-0">
             <h2 className="text-base font-semibold tracking-tight">Reviews</h2>

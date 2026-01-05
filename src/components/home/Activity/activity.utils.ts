@@ -6,14 +6,21 @@ export const sortBadges = (
   a: activityBadgeData,
   b: activityBadgeData
 ): number => {
-  const [aMonth, aDay] = a.timestamp.numeric
-    .split("/")
-    .map((s) => Number.parseInt(s));
-  const [bMonth, bDay] = b.timestamp.numeric
+  console.log(a);
+  console.log(b);
+
+  const [aMonth, aDay, aYear] = a.timestamp.numeric
     .split("/")
     .map((s) => Number.parseInt(s));
 
+  const [bMonth, bDay, bYear] = b.timestamp.numeric
+    .split("/")
+    .map((s) => Number.parseInt(s));
+
+  console.log(`aMonth: ${aMonth} bMoth:${bMonth}`);
+  if (aYear - bYear !== 0) return aYear - bYear;
   if (aMonth - bMonth !== 0) return aMonth - bMonth;
+  console.log(`aDay: ${aMonth} bDay:${bMonth}`);
   return aDay - bDay;
 };
 
