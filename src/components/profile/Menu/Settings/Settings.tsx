@@ -8,6 +8,7 @@ import { IconButton } from "../../../ui/IconButton";
 import { Textarea } from "../../../ui/TextArea";
 import { useMutateProfile } from "../../profile.hooks";
 import Field from "./Field";
+import { cn } from "../../../../utils/cn";
 
 type ActiveState = { username: boolean; bio: boolean };
 
@@ -72,9 +73,15 @@ const Settings = () => {
   };
 
   return (
-    <section className="max-w-full rounded-2xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-neutral-950/40">
-      <header className="mb-6">
-        <p className="mt-1 text-sm text-slate-600 dark:text-white/60">
+    <section
+      className={cn(
+        "max-w-full min-w-0 md:rounded-2xl md:border border-slate-200 bg-white/70 md:shadow-sm md:backdrop-blur",
+        "p-1 sm:p-6",
+        "dark:border-white/10 dark:bg-neutral-950/40"
+      )}
+    >
+      <header className="mb-4 sm:mb-6">
+        <p className="text-sm text-slate-600 dark:text-white/60">
           Manage your profile information.
         </p>
       </header>
@@ -168,11 +175,11 @@ const Settings = () => {
         >
           <Textarea
             id="settings-bio"
-            className="rounded-xl"
-            rows={4}
+            className="rounded-xl text-xs sm:text-sm"
+            rows={8}
             placeholder="Tell others a bit about you…"
             variant="outline"
-            textareaSize="md"
+            textareaSize="sm"
             resize="none"
             value={isLoading ? "" : bio}
             onChange={(e) => setBio(e.target.value)}
@@ -181,21 +188,24 @@ const Settings = () => {
         </Field>
 
         <div className="pt-2">
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/5">
-            <div>
-              <p className="text-sm font-medium">Log out</p>
-              <p className="text-xs text-slate-500 dark:text-white/40">
-                You’ll be returned to the login page.
-              </p>
-            </div>
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-sm font-medium">Log out</p>
+                <p className="text-xs text-slate-500 dark:text-white/40">
+                  You’ll be returned to the login page.
+                </p>
+              </div>
 
-            <Button
-              variant="danger"
-              onClick={() => logout()}
-              disabled={isSaving}
-            >
-              Log out
-            </Button>
+              <Button
+                variant="danger"
+                onClick={() => logout()}
+                disabled={isSaving}
+                className="w-full sm:w-auto"
+              >
+                Log out
+              </Button>
+            </div>
           </div>
         </div>
       </div>

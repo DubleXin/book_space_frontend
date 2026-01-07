@@ -1,31 +1,41 @@
 const Field = ({
   label,
+  hint,
   htmlFor,
   action,
-  hint,
   children,
 }: {
   label: string;
+  hint?: string;
   htmlFor: string;
   action?: React.ReactNode;
-  hint?: string;
   children: React.ReactNode;
 }) => {
   return (
-    <div className="space-y-2">
-      <div className="flex items-end justify-between gap-3">
-        <label
-          htmlFor={htmlFor}
-          className="text-sm font-medium text-slate-800 dark:text-white/80"
-        >
-          {label}
-        </label>
-        {action}
+    <div className="space-y-2 min-w-0">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <label
+            htmlFor={htmlFor}
+            className="block justify-self-center text-sm font-medium text-slate-900 dark:text-white"
+          >
+            {label}
+          </label>
+          {hint ? (
+            <p className="mt-1 text-xs text-slate-500 dark:text-white/40">
+              {hint}
+            </p>
+          ) : null}
+        </div>
+
+        {action ? (
+          <div className="shrink-0 w-full sm:w-auto flex sm:block justify-end">
+            {action}
+          </div>
+        ) : null}
       </div>
-      {children}
-      {hint ? (
-        <p className="text-xs text-slate-500 dark:text-white/40">{hint}</p>
-      ) : null}
+
+      <div className="min-w-0">{children}</div>
     </div>
   );
 };

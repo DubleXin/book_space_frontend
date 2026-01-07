@@ -20,7 +20,7 @@ const Sidebar = ({
   const starCount = starQuery.data ? starQuery.data.length : 0;
   const reviewCount = reviewQuery.data ? reviewQuery.data.length : 0;
   return (
-    <div className="rounded-xl border p-1 flex flex-col gap-2">
+    <div className="md:rounded-xl border-r md:border p-1 flex flex-col gap-2">
       <div>
         <IconButton
           variant={getVariant("settings")}

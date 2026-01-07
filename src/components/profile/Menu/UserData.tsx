@@ -34,9 +34,9 @@ const UserData = ({ state }: { state: MenuState }) => {
         </div>
 
         <div
-          className="rounded-2xl border border-slate-200 bg-white/70 p-6 
+          className="rounded-2xl border border-slate-200 bg-white/70 p-3 md:p-6 
         shadow-sm backdrop-blur dark:border-white/10 dark:bg-neutral-950/40
-        max-h-60 overflow-y-auto scrollbar-thin"
+        max-h-full md:max-h-60 overflow-y-auto scrollbar-thin"
         >
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-semibold tracking-wide text-slate-800 dark:text-white/80">
@@ -48,7 +48,7 @@ const UserData = ({ state }: { state: MenuState }) => {
             </span>
           </div>
 
-          <p className="text-sm leading-relaxed text-slate-700 dark:text-white/70">
+          <p className="text-xs md:text-sm leading-relaxed text-slate-700 dark:text-white/70">
             {profile?.bio?.trim() ? profile.bio : "No bio yet."}
           </p>
         </div>
