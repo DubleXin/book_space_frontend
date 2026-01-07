@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../store";
 import type { EnhancedRecommendationResponse } from "../../types/recommendation";
@@ -27,14 +27,28 @@ import { Activity } from "./Activity";
 const HomePage = () => {
   const { hash } = useLocation();
 
+  const { search, pathname } = useLocation();
   const user = useAuth((s) => s.user);
   const [panel, setPanel] = useState<HomePanelState>("default");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    if (params.get("panel") === "activity") setPanel("activity");
+  }, [search]);
 
   useEffect(() => {
     if (!hash) return;
     const id = hash.slice(1);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   }, [hash]);
+
+  const closeActivity = () => {
+    setPanel("default");
+    const params = new URLSearchParams(search);
+    params.delete("panel");
+    navigate(`${pathname}?${params.toString()}`, { replace: true });
+  };
 
   const subjectsQuery = useSubjects();
   const recommendationQuery = useRecommendations();
@@ -73,7 +87,7 @@ const HomePage = () => {
   if (!recommendations.success) {
     if (!user) {
       return (
-        <div className="w-screen flex p-8 gap-4 text-slate-950 dark:text-white">
+        <div className="max-w-screen flex p-8 gap-4 text-slate-950 dark:text-white">
           <main className="flex-[2] p-4">
             <div className="grid h-full grid-rows-[auto_1fr] gap-6">
               <Tags tags={subjects} />
@@ -123,7 +137,7 @@ const HomePage = () => {
               isPending={activityPending}
               variant={panel === "activity" ? "expanded" : "compact"}
               onExpand={() => setPanel("activity")}
-              onCollapse={() => setPanel("default")}
+              onCollapse={() => closeActivity()}
             />
           </aside>
         </div>

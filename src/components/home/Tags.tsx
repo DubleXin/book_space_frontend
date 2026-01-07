@@ -37,7 +37,7 @@ const Tags = ({ tags, initialCount = 12 }: Props) => {
         )}
 
         <Tag variant="primary" onClick={() => navigate("/explore")}>
-          explore more
+          explore
         </Tag>
       </div>
     </div>
