@@ -22,7 +22,7 @@ export function ReviewsSection({
   return (
     <section
       id="reviews"
-      className={`md:rounded-2xl border transition-[border-color,background-color] duration-700 ease-out ${
+      className={`md:rounded-2xl border dark:border-neutral-800 transition-[border-color,background-color] duration-700 ease-out ${
         highlighted
           ? "border-sky-500 bg-sky-50 dark:border-sky-600 dark:bg-sky-950/30"
           : "border-neutral-200 dark:border-neutral-800"

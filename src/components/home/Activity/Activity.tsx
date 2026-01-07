@@ -30,7 +30,7 @@ const Activity = ({
   return (
     <section
       className={cn(
-        "rounded-xl border ",
+        "rounded-xl border dark:border-neutral-700",
         "bg-white shadow-sm dark:bg-neutral-950",
         "h-[70vh] min-h-[520px] p-2 md:p-10"
       )}

@@ -7,7 +7,7 @@ type Props = {
 
 const RecommendationsAiContent = ({ recommendations }: Props) => {
   return (
-    <div className="rounded-xl border p-4">
+    <div className="rounded-xl border dark:border-neutral-800 p-4">
       <h2 className="text-lg font-semibold">Selected works</h2>
       <ul className="mt-3 flex flex-wrap gap-3 items-center sm:items-start justify-center sm:justify-start">
         {recommendations.aiHighlights.map((s) => (

@@ -12,7 +12,7 @@ export function TagsSkeleton({
   const chipH = "h-8 sm:h-9";
 
   return (
-    <div className="rounded-xl border p-3 sm:p-4">
+    <div className="rounded-xl border dark:border-neutral-800 p-3 sm:p-4">
       <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-3">
         {Array.from({ length: initialCount }).map((_, i) => (
           <Skeleton
@@ -63,7 +63,7 @@ function BookRowSkeleton() {
 
 export function RecommendationsAiSkeleton() {
   return (
-    <div className="rounded-xl border p-2 sm:p-4">
+    <div className="rounded-xl border dark:border-neutral-800 p-2 sm:p-4">
       <div className="flex items-center justify-between gap-3">
         <Skeleton className="h-4 sm:h-5 w-40 sm:w-44" rounded="md" />
       </div>
@@ -85,7 +85,7 @@ export function RecommendationsAlgoSkeleton({
   items?: number;
 }) {
   return (
-    <div className="min-h-0 rounded-xl border p-3 sm:p-4 pb-10 sm:pb-12">
+    <div className="min-h-0 rounded-xl border dark:border-neutral-800 p-3 sm:p-4 pb-10 sm:pb-12">
       <div className="flex items-center justify-between gap-3">
         <Skeleton className="h-4 sm:h-5 w-32 sm:w-36" rounded="md" />
         <Skeleton className="h-8 sm:h-9 w-20 sm:w-24" rounded="full" />
@@ -106,7 +106,7 @@ export function RecommendationsAlgoSkeleton({
 
 export function GuestContentSkeleton({ items = 12 }: { items?: number }) {
   return (
-    <div className="min-h-0 p-3 sm:p-4 pb-10 sm:pb-12 border rounded-xl">
+    <div className="min-h-0 p-3 sm:p-4 pb-10 sm:pb-12 border dark:border-neutral-800 rounded-xl">
       <div className="flex items-center justify-between gap-3">
         <Skeleton className="h-4 sm:h-5 w-36 sm:w-40" rounded="md" />
       </div>

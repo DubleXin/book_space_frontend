@@ -70,13 +70,13 @@ export function BookCard({
         `
         rounded-xl 
         border 
-        hover:border hover:border-neutral-500
+        hover:border hover:border-neutral-700
         dark:hover:border-neutral-300
         focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
         transition
         `,
         isRow
-          ? "p-2 hover:bg-gray-50 dark:hover:bg-neutral-800/60 border-neutral-200 dark:border-neutral-500"
+          ? "p-2 hover:bg-gray-50 dark:hover:bg-neutral-800/60 border-neutral-200 dark:border-neutral-700"
           : "p-2 flex border-transparent",
         bookCardVariants[variant],
         className

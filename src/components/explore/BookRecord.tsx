@@ -25,7 +25,7 @@ const BookRecord = ({
             group flex gap-3
             rounded-xl border border-neutral-200 bg-white p-3
             hover:bg-gray-50 hover:border-neutral-500
-            dark:border-neutral-500 dark:bg-neutral-950
+            dark:border-neutral-700 dark:bg-neutral-950
             dark:hover:bg-neutral-800/60 dark:hover:border-neutral-300
             transition
             focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2

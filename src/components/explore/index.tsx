@@ -112,7 +112,7 @@ export default function ExplorePage() {
 
           <div className="mt-3 min-w-0">
             {filteredBooks.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-neutral-300 bg-white p-6 text-sm text-gray-700 dark:border-neutral-700 dark:bg-neutral-950 dark:text-gray-300">
+              <div className="rounded-2xl border dark:border-neutral-800 border-dashed border-neutral-300 bg-white p-6 text-sm text-gray-700 dark:border-neutral-700 dark:bg-neutral-950 dark:text-gray-300">
                 No books matched your filters. Try clearing subjects or using a
                 shorter query.
               </div>

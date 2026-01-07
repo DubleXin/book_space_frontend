@@ -46,7 +46,7 @@ const Book = () => {
     <div className="max-w-screen text-slate-950 dark:text-white md:p-8 min-w-0">
       <main className="mx-auto flex max-w-6xl gap-6">
         <div className="flex-1 space-y-6">
-          <section className="md:rounded-2xl border bg-white/50 sm:p-6 md:shadow-sm dark:bg-neutral-950/30">
+          <section className="md:rounded-2xl border dark:border-neutral-800 bg-white/50 sm:p-6 md:shadow-sm dark:bg-neutral-950/30">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-[240px_1fr] md:items-start">
               <CoverContent
                 book={book}

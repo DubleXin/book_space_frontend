@@ -18,7 +18,7 @@ const GuestContent = ({
   return (
     <div
       className={cn(
-        "min-h-0  p-4 pb-12 border rounded-xl",
+        "min-h-0  p-4 pb-12 border dark:border-neutral-800 rounded-xl",
         isHighlighted ? " border-sky-500 dark:border-sky-600" : null,
         "transition",
         className
