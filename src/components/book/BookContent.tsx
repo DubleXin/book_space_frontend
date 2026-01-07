@@ -46,7 +46,7 @@ const BookContent = ({ book }: { book: Book }) => {
         </div>
       </div>
 
-      <div className="mt-6 md:rounded-2xl md:border bg-white p-5 dark:bg-neutral-950/40">
+      <div className="mt-6 md:rounded-2xl md:border md:dark:border-neutral-800 bg-white p-5 dark:bg-neutral-950/40">
         <h2 className="mb-3 text-sm font-semibold tracking-wide text-neutral-700 dark:text-neutral-300">
           About this book
         </h2>

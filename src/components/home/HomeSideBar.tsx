@@ -11,7 +11,7 @@ const HomeSidebar = () => {
 
   return (
     <div className="relative flex flex-col gap-2 z-10 mt-16 invisible pointer-events-none lg:visible lg:pointer-events-auto">
-      <div className="absolute -left-[2.45rem] top-0 inline-flex border-y border-l rounded-l-xl p-1 bg-white dark:bg-neutral-950">
+      <div className="absolute -left-[2.45rem] top-0 inline-flex border-y border-l rounded-l-xl p-1 bg-white dark:bg-neutral-950 dark:border-neutral-800">
         <IconButton
           label={isOpen ? "close activity" : "activity"}
           Icon={Logs}

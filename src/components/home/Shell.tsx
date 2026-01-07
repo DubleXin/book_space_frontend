@@ -9,7 +9,7 @@ const Shell = ({ children }: { children: React.ReactNode }) => (
       <section
         className={cn(
           "relative isolate",
-          "w-full grid grid-cols-[auto_1fr] gap-2 rounded-2xl md:border",
+          "w-full grid grid-cols-[auto_1fr] gap-2 rounded-2xl md:border md:dark:border-neutral-800",
           "bg-white/50 p-6 shadow-sm dark:bg-neutral-950/30 min-h-[70vh]"
         )}
       >

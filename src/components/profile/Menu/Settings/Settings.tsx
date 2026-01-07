@@ -193,7 +193,7 @@ const Settings = () => {
               <div className="min-w-0">
                 <p className="text-sm font-medium">Log out</p>
                 <p className="text-xs text-slate-500 dark:text-white/40">
-                  You’ll be returned to the login page.
+                  You'll be returned to the login page.
                 </p>
               </div>
 

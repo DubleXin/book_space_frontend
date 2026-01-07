@@ -7,7 +7,7 @@ type Props = {
 
 const RecommendationsAlgoContent = ({ recommendations }: Props) => {
   return (
-    <div className="min-h-0 rounded-xl border p-4 pb-12">
+    <div className="min-h-0 rounded-xl border dark:border-neutral-800 p-4 pb-12">
       <div className="flex items-center justify-between gap-3 ">
         <h2 className="text-lg font-semibold">Explore more</h2>
       </div>

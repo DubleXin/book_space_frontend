@@ -22,7 +22,7 @@ const Tags = ({ tags, initialCount = 12 }: Props) => {
   const hasMore = tags.length > initialCount;
 
   return (
-    <div className="rounded-xl border p-4">
+    <div className="rounded-xl border dark:border-neutral-800 p-4">
       <div className="flex flex-wrap items-center justify-start gap-3">
         {visibleTags.map((s) => (
           <Link key={`subject-tag-${s.name}`} to={`/explore?subject=${s.name}`}>

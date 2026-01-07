@@ -10,7 +10,7 @@ export function BookPageSkeleton() {
     <div className="max-w-screen text-slate-950 dark:text-white md:p-8 min-w-0">
       <main className="mx-auto flex max-w-6xl gap-6">
         <div className="flex-1 space-y-6">
-          <section className="md:rounded-2xl border bg-white/50 p-3 sm:p-4 md:p-6 md:shadow-sm dark:bg-neutral-950/30">
+          <section className="md:rounded-2xl border dark:border-neutral-800 bg-white/50 p-3 sm:p-4 md:p-6 md:shadow-sm dark:bg-neutral-950/30">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-[240px_1fr] md:items-start">
               <CoverContentSkeleton />
               <BookContentSkeleton />
@@ -68,7 +68,7 @@ function BookContentSkeleton() {
       </div>
 
       {/* About */}
-      <div className="mt-6 md:rounded-2xl md:border bg-white p-4 sm:p-5 dark:bg-neutral-950/40">
+      <div className="mt-6 md:rounded-2xl md:border md:dark:border-neutral-800 bg-white p-4 sm:p-5 dark:bg-neutral-950/40">
         <Skeleton className="h-4 w-28" rounded="md" />
         <div className="mt-4 space-y-2">
           <Skeleton className="h-4 w-full" rounded="md" />
