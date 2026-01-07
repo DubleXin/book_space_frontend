@@ -28,8 +28,8 @@ const CoverContent = ({
 
   return (
     <div className="self-start">
-      <div className="overflow-hidden rounded-2xl border bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
-        <div className="aspect-[2/3] w-full">
+      <div className="overflow-hidden md:rounded-2xl border bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="aspect-[2/3] w-full min-w-0">
           {book?.coverUrl ? (
             <img
               src={book.coverUrl}
