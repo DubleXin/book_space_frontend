@@ -4,6 +4,7 @@ import { ratingStyles } from "./reviews.utils";
 import ReviewCompose from "./ReviewCompose";
 import { useReviewsByBook } from "./reviews.hooks";
 import { useAuth } from "../../../store";
+import { ReviewsSectionSkeleton } from "../book.skeletons";
 
 export function ReviewsSection({
   bookId,
@@ -15,6 +16,8 @@ export function ReviewsSection({
   const reviewsQuery = useReviewsByBook(bookId);
   const reviews = reviewsQuery.data ?? [];
   const user = useAuth((s) => s.user);
+
+  if (reviewsQuery.isPending) return <ReviewsSectionSkeleton />;
 
   return (
     <section

@@ -23,6 +23,12 @@ import type { HomePanelState } from "./home.types";
 import Shell from "./Shell";
 import HomeContext from "./home.context";
 import { Activity } from "./Activity";
+import {
+  GuestContentSkeleton,
+  RecommendationsAiSkeleton,
+  RecommendationsAlgoSkeleton,
+  TagsSkeleton,
+} from "./home.skeletons";
 
 const HomePage = () => {
   const { hash } = useLocation();
@@ -90,8 +96,17 @@ const HomePage = () => {
         <div className="max-w-screen flex p-8 gap-4 text-slate-950 dark:text-white">
           <main className="flex-[2] p-4">
             <div className="grid h-full grid-rows-[auto_1fr] gap-6">
-              <Tags tags={subjects} />
-              <GuestContent books={books} />
+              {subjectsQuery.isPending ? (
+                <TagsSkeleton />
+              ) : (
+                <Tags tags={subjects} />
+              )}
+
+              {bookQuery.isPending ? (
+                <GuestContentSkeleton />
+              ) : (
+                <GuestContent books={books} />
+              )}
             </div>
           </main>
         </div>
@@ -111,13 +126,27 @@ const HomePage = () => {
         <div className="flex w-full gap-6 min-w-0 relative">
           <main className="min-w-0">
             <div className="grid h-full grid-rows-[auto_auto_1fr] gap-6">
-              <Tags tags={subjects} />
-              <RecommendationsAiContent
-                recommendations={recommendations.data}
-              />
-              <RecommendationsAlgoContent
-                recommendations={recommendations.data}
-              />
+              {subjectsQuery.isPending ? (
+                <TagsSkeleton />
+              ) : (
+                <Tags tags={subjects} />
+              )}
+
+              {recommendationQuery.isPending ? (
+                <RecommendationsAiSkeleton />
+              ) : (
+                <RecommendationsAiContent
+                  recommendations={recommendations.data}
+                />
+              )}
+
+              {recommendationQuery.isPending ? (
+                <RecommendationsAlgoSkeleton />
+              ) : (
+                <RecommendationsAlgoContent
+                  recommendations={recommendations.data}
+                />
+              )}
             </div>
           </main>
 
