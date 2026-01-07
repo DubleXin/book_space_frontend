@@ -79,7 +79,7 @@ const Tags = ({
             variant="outline"
             className="w-full"
             onClick={() =>
-              setFilters({ subject: [], offset: 0 }, { replace: true })
+              setFilters({ subject: [], offset: 0 }, { replace: false })
             }
           >
             Clear subjects

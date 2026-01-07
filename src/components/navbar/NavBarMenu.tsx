@@ -63,14 +63,16 @@ const NavBarMenu = ({
             Home
           </Link>
 
-          <Link
-            to="/?panel=activity"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/10"
-          >
-            <Logs className="h-4 w-4" />
-            Activity
-          </Link>
+          {user && (
+            <Link
+              to="/?panel=activity"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <Logs className="h-4 w-4" />
+              Activity
+            </Link>
+          )}
           <div className="flex items-center justify-between rounded-lg px-3 pr-8 py-2 hover:bg-black/5 dark:hover:bg-white/10">
             <span className="text-sm">Theme</span>
             <div className="w-16">

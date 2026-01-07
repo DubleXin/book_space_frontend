@@ -38,7 +38,7 @@ const SearchBarControls = ({
             value={filters.limit}
             onChange={(e) => {
               const limit = Number(e.target.value);
-              setFilters({ limit, offset: 0 }, { replace: true });
+              setFilters({ limit, offset: 0 }, { replace: false });
             }}
           >
             {[6, 12, 18, 24].map((n) => (
@@ -54,9 +54,12 @@ const SearchBarControls = ({
           size="sm"
           variant="outline"
           onClick={() =>
-            setFilters({
-              offset: Math.max(filters.offset - filters.limit, 0),
-            })
+            setFilters(
+              {
+                offset: Math.max(filters.offset - filters.limit, 0),
+              },
+              { replace: false }
+            )
           }
           disabled={!canPrev}
         >
@@ -66,7 +69,12 @@ const SearchBarControls = ({
           className="w-auto"
           size="sm"
           variant="outline"
-          onClick={() => setFilters({ offset: filters.offset + filters.limit })}
+          onClick={() =>
+            setFilters(
+              { offset: filters.offset + filters.limit },
+              { replace: false }
+            )
+          }
           disabled={!canNext}
         >
           Next
