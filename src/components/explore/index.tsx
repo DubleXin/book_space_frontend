@@ -34,7 +34,7 @@ export default function ExplorePage() {
         ? filters.subject.filter((t) => t !== tag)
         : [...filters.subject, tag];
 
-      setFilters({ subject: nextTags, offset: 0 }, { replace: true });
+      setFilters({ subject: nextTags, offset: 0 }, { replace: false });
     },
     [filters.subject, setFilters]
   );
