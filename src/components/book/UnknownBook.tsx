@@ -6,9 +6,9 @@ const UnknownBook = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-dvh max-w-screen p-8 text-slate-950 dark:text-white">
+    <div className="min-h-dvh max-w-screen md:p-8 text-slate-950 dark:text-white">
       <main className="mx-auto flex max-w-6xl flex-col gap-6">
-        <section className="rounded-2xl border bg-white/50 p-6 shadow-sm dark:bg-neutral-950/30">
+        <section className="md:rounded-2xl md:border bg-white/50 p-6 shadow-sm dark:bg-neutral-950/30">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-[240px_1fr] md:items-start">
             <div className="self-start">
               <div className="overflow-hidden rounded-2xl border bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
@@ -32,7 +32,7 @@ const UnknownBook = () => {
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <Button
-                  className="w-auto gap-2"
+                  className="w-full md:w-auto gap-2"
                   onClick={() => navigate("/explore")}
                 >
                   <Compass className="h-4 w-4" />
@@ -41,7 +41,7 @@ const UnknownBook = () => {
 
                 <Button
                   variant="outline"
-                  className="w-auto gap-2"
+                  className="w-full  md:w-auto gap-2"
                   onClick={() => navigate(-1)}
                 >
                   <ArrowLeft className="h-4 w-4" />
@@ -49,7 +49,7 @@ const UnknownBook = () => {
                 </Button>
               </div>
 
-              <div className="mt-6 rounded-2xl border bg-white p-5 dark:bg-neutral-950/40">
+              <div className="mt-6 md:rounded-2xl md:border bg-white p-2 md:p-5 dark:bg-neutral-950/40">
                 <h2 className="mb-3 text-sm font-semibold tracking-wide text-neutral-700 dark:text-neutral-300">
                   What you can do
                 </h2>

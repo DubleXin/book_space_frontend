@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const BookContent = ({ book }: { book: Book }) => {
   return (
-    <div className="min-w-0">
+    <div className="min-w-0 p-2 md:p-0">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold leading-tight md:text-3xl">
           {book?.title ?? "—"}
@@ -46,7 +46,7 @@ const BookContent = ({ book }: { book: Book }) => {
         </div>
       </div>
 
-      <div className="mt-6 rounded-2xl border bg-white p-5 dark:bg-neutral-950/40">
+      <div className="mt-6 md:rounded-2xl md:border bg-white p-5 dark:bg-neutral-950/40">
         <h2 className="mb-3 text-sm font-semibold tracking-wide text-neutral-700 dark:text-neutral-300">
           About this book
         </h2>
