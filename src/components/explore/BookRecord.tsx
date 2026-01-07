@@ -29,7 +29,7 @@ const BookRecord = ({
             dark:hover:bg-neutral-800/60 dark:hover:border-neutral-300
             transition
             focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-            `
+            text-ellipsis`
       )}
     >
       <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg border bg-gray-100 dark:border-neutral-800 dark:bg-neutral-900">
@@ -50,7 +50,7 @@ const BookRecord = ({
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold text-gray-900 dark:text-gray-100">
+            <div className="truncate text-sm font-semibold text-gray-900 dark:text-gray-100 md:text-xs">
               {book.title}
             </div>
 

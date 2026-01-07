@@ -83,7 +83,7 @@ export default function ExplorePage() {
   }, [count, filters.offset, filteredBooks.length]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-6 ">
+    <div className="mx-auto w-full max-w-6xl px-4 py-6">
       <div className="mb-5">
         <h1 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
           Explore books
@@ -93,8 +93,8 @@ export default function ExplorePage() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-12">
-        <main className="md:col-span-8 lg:col-span-9">
+      <div className="grid gap-4 md:grid-cols-12 min-w-0">
+        <main className="md:col-span-8 lg:col-span-9 min-w-0 order-2 md:order-1">
           <SearchBar
             filters={filters}
             setFilters={setFilters}
@@ -110,14 +110,14 @@ export default function ExplorePage() {
             count={count}
           />
 
-          <div className="mt-3">
+          <div className="mt-3 min-w-0">
             {filteredBooks.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-neutral-300 bg-white p-6 text-sm text-gray-700 dark:border-neutral-700 dark:bg-neutral-950 dark:text-gray-300">
                 No books matched your filters. Try clearing subjects or using a
                 shorter query.
               </div>
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 min-w-0">
                 {filteredBooks.map((b) => (
                   <BookRecord
                     key={b.id}
@@ -131,7 +131,7 @@ export default function ExplorePage() {
           </div>
         </main>
 
-        <aside className="md:col-span-4 lg:col-span-3">
+        <aside className="md:col-span-4 lg:col-span-3 min-w-0 order-1 md:order-2">
           <DeepSearch
             filters={filters}
             setFilters={setFilters}
