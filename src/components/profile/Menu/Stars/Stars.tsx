@@ -20,7 +20,7 @@ const Stars = () => {
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <div className="min-w-0">
           <p className="text-sm text-slate-600 dark:text-white/60">
-            Books you&apos;ve starred ({stars.length})
+            Books you've starred ({stars.length})
           </p>
         </div>
 
