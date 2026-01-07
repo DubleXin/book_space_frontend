@@ -29,7 +29,6 @@ const GuestContent = ({
         <h2 className="text-lg font-semibold">Featured Woks</h2>
       </div>
 
-      {/* key: min-h-0 + overflow */}
       <div className="mt-3 min-h-0 overflow-auto">
         <ul className="space-y-3 flex gap-3 flex-wrap">
           {books &&

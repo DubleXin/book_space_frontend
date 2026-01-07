@@ -32,7 +32,7 @@ const Activity = ({
       className={cn(
         "rounded-xl border ",
         "bg-white shadow-sm dark:bg-neutral-950",
-        "h-[70vh] min-h-[520px] p-10"
+        "h-[70vh] min-h-[520px] p-2 md:p-10"
       )}
     >
       <header className="flex items-start justify-between gap-3 p-4 border-b border-slate-200/70 dark:border-white/10">
@@ -64,7 +64,9 @@ const Activity = ({
       <div
         className={cn(
           "p-4",
-          isExpanded ? "h-[calc(60vh-64px)] overflow-y-auto scrollbar-thin" : ""
+          isExpanded
+            ? "h-[calc(70vh-64px)] md:h-[calc(60vh-64px)] overflow-y-auto scrollbar-thin"
+            : ""
         )}
       >
         {isPending ? (
