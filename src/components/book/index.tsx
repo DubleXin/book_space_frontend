@@ -6,6 +6,7 @@ import CoverContent from "./CoverContent";
 import { useNavigate } from "react-router-dom";
 import BookContent from "./BookContent";
 import UnknownBook from "./UnknownBook";
+import { BookPageSkeleton } from "./book.skeletons";
 
 const Book = () => {
   const { id } = useParams();
@@ -37,7 +38,9 @@ const Book = () => {
   const book = bookQuery.data?.data;
   const reviewsHighlighted = hash === "#reviews";
 
-  if (!bookId || !book) return <UnknownBook />;
+  if (!bookId) return <UnknownBook />;
+  if (bookQuery.isPending) return <BookPageSkeleton />;
+  if (!book) return <UnknownBook />;
 
   return (
     <div className="max-w-screen text-slate-950 dark:text-white md:p-8 min-w-0">
