@@ -7,9 +7,9 @@ import { Reviews } from "./Reviews";
 
 const widths: Record<MenuState, string> = {
   default: "",
-  settings: "max-w-2xl",
-  stars: "max-w-4xl",
-  reviews: "max-w-5xl",
+  settings: "md:max-w-2xl",
+  stars: "md:max-w-4xl",
+  reviews: "md:max-w-5xl",
 };
 
 const Menu = ({
@@ -22,7 +22,7 @@ const Menu = ({
   if (state === "default") return null;
 
   return (
-    <section className="w-full px-4 py-6 h-[80vh] overflow-y-auto scrollbar-thin">
+    <section className="w-full px-2 md:px-4 py-6 md:h-[80vh] overflow-y-auto scrollbar-thin">
       <div className={`mx-auto w-full ${widths[state]}`}>
         <div className="mb-4 flex items-center gap-3">
           <IconButton

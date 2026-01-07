@@ -13,9 +13,12 @@ const Profile = () => {
   const onWidowStateChange = (state: MenuState) => setMenuState(state);
 
   return (
-    <div className="max-w-screen p-8 text-slate-950 dark:text-white">
-      <main className="mx-auto flex max-w-7xl gap-6">
-        <section className="w-full grid grid-cols-[auto_1fr] gap-2 rounded-2xl border bg-white/50 p-6 shadow-sm dark:bg-neutral-950/30 min-h-[70vh]">
+    <div className="max-w-screen md:p-8 text-slate-950 dark:text-white min-w-0">
+      <main className="mx-auto flex md:max-w-7xl gap-6">
+        <section
+          className="w-full grid grid-cols-[auto_1fr] md:gap-2 md:rounded-2xl md:border bg-white/50 
+        md:p-6 shadow-sm dark:bg-neutral-950/30 min-h-[100vh] md:min-h-[70vh]"
+        >
           <Sidebar
             menuState={menuState}
             onMenuStateChange={onWidowStateChange}
@@ -23,11 +26,11 @@ const Profile = () => {
           <div className="flex w-full">
             <div
               className={cn(
-                "rounded-xl w-full",
+                "md:rounded-xl w-full",
                 "overflow-hidden",
                 "transition-[max-width,opacity] duration-300 ease-in-out",
                 menuState === "default"
-                  ? " border max-w-full flex justify-start px-8 py-16 opacity-100"
+                  ? "md:border max-w-full flex justify-start py-4 md:px-8 md:py-16 opacity-100"
                   : "max-w-0 opacity-0"
               )}
             >
@@ -36,7 +39,7 @@ const Profile = () => {
 
             <aside
               className={cn(
-                "rounded-xl border w-full",
+                "md:rounded-xl md:border w-full",
                 "overflow-hidden",
                 "transition-[max-width,opacity] duration-300 ease-in-out",
                 menuState !== "default"

@@ -141,7 +141,7 @@ const SearchBar = () => {
             placeholder:text-neutral-500
             dark:text-white dark:placeholder:text-white/50
           "
-          placeholder="Explore books, authors, tags…"
+          placeholder="Search"
           autoComplete="off"
         />
       </form>
