@@ -3,7 +3,20 @@ import type { Book } from "../../types/book";
 import { Tag } from "../ui/Tag";
 import { Link } from "react-router-dom";
 
+const SOURCE_LABELS: Record<string, string> = {
+  openlibrary: "Open Library",
+};
+
 const BookContent = ({ book }: { book: Book }) => {
+  const sourceKey = (book?.externalSource ?? "").toLowerCase();
+
+  const sourceLabel = SOURCE_LABELS[sourceKey] ?? book?.externalSource ?? null;
+
+  const sourceUrl =
+    sourceKey === "openlibrary" && book?.externalId
+      ? `https://openlibrary.org${book.externalId}`
+      : null;
+
   return (
     <div className="min-w-0 p-2 md:p-0">
       <div className="flex flex-col gap-2">
@@ -15,16 +28,31 @@ const BookContent = ({ book }: { book: Book }) => {
           <span className="font-medium text-neutral-900 dark:text-neutral-100">
             {book?.author ?? "Unknown author"}
           </span>
+
           {book?.publishedYear ? (
             <>
               <span className="opacity-50">•</span>
               <span>{book.publishedYear}</span>
             </>
           ) : null}
-          {book?.externalSource ? (
+
+          {sourceLabel ? (
             <>
               <span className="opacity-50">•</span>
-              <span className="capitalize">{book.externalSource}</span>
+
+              {sourceUrl ? (
+                <a
+                  href={sourceUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-center gap-1 underline underline-offset-2 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  aria-label={`View this book on ${sourceLabel} (external source)`}
+                >
+                  {sourceLabel}
+                </a>
+              ) : (
+                <span className="capitalize">{sourceLabel}</span>
+              )}
             </>
           ) : null}
         </div>
@@ -33,9 +61,7 @@ const BookContent = ({ book }: { book: Book }) => {
           {book?.subjects?.length ? (
             book.subjects.map((s) => (
               <Link key={`tag-${s.name}`} to={`/explore?subject=${s.name}`}>
-                <Tag key={s.name} variant="primary">
-                  {s.name.replace("_", " ")}
-                </Tag>
+                <Tag variant="primary">{s.name.replace("_", " ")}</Tag>
               </Link>
             ))
           ) : (
