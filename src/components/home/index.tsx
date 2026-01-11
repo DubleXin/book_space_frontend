@@ -31,8 +31,6 @@ import {
 } from "./home.skeletons";
 
 const HomePage = () => {
-  const { hash } = useLocation();
-
   const { search, pathname } = useLocation();
   const user = useAuth((s) => s.user);
   const [panel, setPanel] = useState<HomePanelState>("default");
@@ -42,12 +40,6 @@ const HomePage = () => {
     const params = new URLSearchParams(search);
     if (params.get("panel") === "activity") setPanel("activity");
   }, [search]);
-
-  useEffect(() => {
-    if (!hash) return;
-    const id = hash.slice(1);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  }, [hash]);
 
   const closeActivity = () => {
     setPanel("default");
